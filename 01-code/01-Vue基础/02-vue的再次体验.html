@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>每天都被自己帅醒!</title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<!--v-model="msg"表示的是双向数据绑定的指令-->
+		<input type="text" v-model="msg">
+		<!--插值语法-->
+		<p>{{msg}}</p>
+	</div>
+
+	<script type="text/javascript">
+		// 体验Vue中的双向数据绑定
+
+		// 需求:在文本框中输入数据,改变后,p标签中的内容会自动的显示改变后的内容
+
+		// 创建Vue的实例
+		const vm = new Vue({
+			el:'#app', // 选择器
+			data:{
+				msg:'禹哥和华哥是天生的一对'
+			}
+		})
+
+		/*
+			Vue中,双标签(成对的标签)中间显示的内容如果是动态的,使用插值语法: {{表达式}}
+			表单标签如果要显示内容,或者是获取输入的内容,通常使用双向数据绑定的指令: v-model="表达式"
+			Vue中的标签中使用了属性和值的写法,就是键值对,但是v-开头的叫指令
+			如果在标签中看到了v-开头的东西,就是指令
+			data中的属性和值是键值对的关系,data中的叫属性,html标签中用到了这个属性叫表达式
+			v-model指令:双向数据绑定的指令
+			双向数据绑定:数据变化了,界面也会随之变化,界面变化了,数据也会变化
+		
+
+			html中的div的id是app-----这里的div是html中的容器
+			id为app的div内部所有的html内容----叫模版
+			new Vue({
+				el:'#app'  根据选择器获取html中对应的容器,目的是为了操作容器中模版的内容
+				data:{}   对象,相关的数据都会在data中定义,data中的内容一般都是键值对的方式,里面的内容是属性和值的关系
+			})
+			{{msg}}   插值语法,msg叫表达式
+			v-model:首先是一个属性,但是由于是v-开头的,所以在vue中叫指令,v-model指令的作用:双向数据绑定
+			v-model="msg" msg叫表达式,这个值是动态的
+			插值语法一般用在成对的标签中间,v-model指令一般用在表单标签中
+
+
+
+		
+		
+		
+		*/
+
+	</script>
+</body>
+
+</html>

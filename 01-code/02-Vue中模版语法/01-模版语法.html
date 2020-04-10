@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>玉树临风美少年，揽镜自顾夜不眠 </title>
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!--插值语法:-->
+    <h2>{{msg}}</h2>
+    <h2>{{msg.toUpperCase()}}</h2>
+    <h2>{{msg.split(' ').reverse().join(' ')}}</h2>
+    <!--强制数据绑定-->  <!--普通标签中的属性的值是动态的:强制绑定数据的指令-->
+    <a v-bind:href="url">百度</a>
+    <!--强制绑定数据的简写方式:-->
+    <!--强制数据绑定的指令的简写方式   :属性="表达式"-->
+    <a :href="url">百度</a>
+    <!--文本框中的value数据是动态的写法的方式:-->
+    <input type="text" v-bind:value="tt">
+    <input type="text" :value="tt">
+    <input type="text" v-model="tt">
+    <hr>
+    <!--绑定事件监听-->
+    <button v-on:click="clickHandle1">华哥说:吻我</button>
+    <button v-on:click="clickHandle2">健哥说:亲我</button>
+    <button v-on:click="clickHandle3">禹哥说:抽我</button>
+    <hr>
+    <!--绑定事件监听的简写方式-->
+    <button @click="clickHandle4">杨哥说:你们这些渣男</button>
+
+    <hr>
+    <!--Vue中如何获取DOM元素,并进行操作-->
+    <button @click="showMsg">显出原形</button>
+    <p ref="p1">今天天气格外好,华哥和健哥和禹哥来到桃花岛,要一起笑</p>
+
+
+
+  </div>
+  <script type="text/javascript">
+    // 看到vm 就要想起MVVM 模式  vm Vue的实例对象
+
+    const vm = new Vue({
+      // 根据选择器获取容器的
+      el: '#app',
+      // 定义数据的
+      data: {
+        msg: 'what Are you No sha Lei',
+        url:'http://www.baidu.com',
+        tt:'哈哈,我又变帅了'
+      },
+      // 写方法的
+      methods: {
+        // 普通的写法,里面的this是谁---->Vue的实例对象
+        clickHandle1:function(){
+          console.log('吻的真香',this)
+        },
+        // 箭头函数,此时使用箭头函数,里面的this是谁---->window
+        clickHandle2:()=>{
+          console.log('亲的真好',this)
+        },
+        // 推荐写法,简写---->中this是---->Vue的实例对象
+        clickHandle3(){
+          console.log('来~呀,快活呀',this)
+        },
+        clickHandle4(){
+          console.log('那天我看到他们三人一起洗澡')
+        },
+        // 点击按钮的时候修改p标签中的内容---Vue中如何获取DOM元素,对DOM进行操作
+        showMsg(){
+          this.$refs.p1.innerHTML="改变啦"
+        }
+      }
+    })
+
+    /*
+    {{msg}} 插值一般用在成对的标签中间使用
+    v-model双向数据绑定指令,一般用在表单标签中
+    强制数据绑定指令  v-bind:属性="表达式" ,强制数据绑定的指令的简写方式   :属性="表达式",普通标签中的属性的值如果希望是动态的,一般用强制绑定的这个指令即可
+    
+    v-on绑定事件的指令   写法   v-on:事件类型="回调函数"
+    事件绑定的时候,事件的类型(事件名字)是没有on开头,都是把原来DOM中的事件中的on干掉,后面的字母小写
+
+    v-model是双向数据绑定指令,一般用在表单标签中
+    v-bind是强制数据绑定指令,一般用在成对的标签中(普通标签) 简写   :属性="表达式"
+    v-on是事件监听绑定指令,一般在标签绑定事件的时候使用 简写   @事件名字="回调函数"
+
+    Vue的实例里面已经定义过的内容,在div容器中才可以使用
+    在Vue中想要获取DOM元素可以在DOM元素标签上使用ref属性="值" 通过vm实例对象.$refs.值即可获取该DOM元素
+    
+    
+    */
+
+
+
+
+    /**
+     * v-bind--->属性,但是是v-开头,在Vue中叫指令,
+     * v-bind指令的作用:强制绑定数据,为当前的属性里面绑定一个值(数据)
+     * v-bind指令作用:如果想要把数据(一个值,动态的值)存储到一个属性中,那么可以使用v-bind指令
+     * v-bind指令可以简写-----> :属性名字="表达式"----->属性名字="值"
+     * 总结:任何的属性都可以通过强制绑定数据的方式进行值的保存
+     * v-on:click----->
+     * v-on是一个属性,在Vue中叫指令
+     * v-on指令作用:绑定事件监听
+     * v-on:事件的名字="回调函数"--->注意问题:事件名字是没有on的
+     * methods:{}是一个对象,使用到的所有的方法一般都是在methods对象中定义的,每个方法之间使用逗号隔开,methods对象中的方法定义的时候都是以键值对的方式进行定义的
+     * v-on指令可以简写:-------->@事件名字="回调函数"
+     *
+     * 总结:
+     * v-model指令:双向数据绑定,一般用在表单标签上
+     * v-bind指令:强制绑定数据的,一般用于属性进行值的保存操作,可以简写---->:属性名字="表达式"
+     * v-on指令:绑定事件监听的-----可以简写---->@事件名字="回调函数"
+     *
+     * Vue中是可以获取DOM对象,然后进行操作的,但是一般不是特别多(项目中会使用该方式来获取DOM对象)
+     * 1.首先在要获取的html标签上使用  ref属性  ,用法:   ref="值", 值就相当于是id属性的值
+     * 2.在Vue的实例对象内部的相关的操作的方法中,直接使用vm(this).$refs.值, ---->值就是上面ref属性的值--->此时可以直接获取该DOM元素对象,并进行操作
+     *
+     *
+     *
+     */
+
+
+
+
+
+  </script>
+</body>
+
+</html>

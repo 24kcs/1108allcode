@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>玉树临风美少年，揽镜自顾夜不眠 </title>
+	<!--第二种引入Vue的方式:先下载,然后本地引入Vue.js文件-->
+	<script src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!--容器,DOM容器,Vue中的内容会全部的渲染到这个容器中-->
+	<div id="app">
+		<!--{{msg}}是插值语法,msg是一个表达式-->
+		<h1>{{msg}}</h1>
+	</div>
+	<script type="text/javascript">
+		// 创建Vue的实例对象
+		const vm = new Vue({
+			// 键值对的写法
+			el: '#app',  // el----element---->#app id选择器,通过el的选择器可以获取到html中div这个容器
+			// 数据对象
+			data: {
+				// msg-----属性,值的内容随便写
+				msg: '禹哥是一个风流倜傥,英俊潇洒,骚气十足的男人'
+			}
+		})
+		console.log(vm)
+		// 本身vm对象是可以找到data属性,就可以通过vm.data.msg进行访问,但是,通过代码测试发现:vm不能直接找到data属性(Vue源码分析的时候解释)
+		// console.log(vm.data.msg)  // 报错的  data是undefined  
+		// console.log(vm._data.msg)
+		// console.log(vm.$data.msg)
+		console.log(vm.msg)   // Vue数据代理,vm代理了data
+
+
+		
+
+
+		// {}---->配置对象---->内部都是键值对的写法
+		// msg 在data中书写的,我们就叫属性,如果msg是在html标签中书写的,就叫表达式,Vue源码分析的时候会有助于大家对源码的理解
+		// Vue中有数据代理
+		// html结构中如果要显示对应的内容,前提是data中已经定义过了(插值语法)
+
+
+
+
+		//  github中搜索vue 然后找到dist目录中的vue.js文件,下载到本地后直接在html文件中引入即可使用 
+	</script>
+</body>
+
+</html>

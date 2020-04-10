@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>每天都被自己帅醒!</title>
+  <link rel="stylesheet" href="">
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <fieldset>
+      <legend>姓名操作</legend>
+      姓氏:
+      <input type="text" placeholder="请输入姓名" v-model="firstName"><br />
+      名字:
+      <input type="text" placeholder="请输入名字" v-model="lastName"><br />
+    </fieldset>
+    <fieldset>
+      <legend>单向和双向操作</legend>
+      姓名(单向操作):<input type="text" placeholder="显示姓名" v-model="fullName1"><br />
+      姓名(单向操作):<input type="text" placeholder="显示姓名" v-model="fullName2"><br />
+      姓名(双向操作):<input type="text" placeholder="显示姓名" v-model="fullName3"><br />
+    </fieldset>
+  </div>
+  <script type="text/javascript">
+    // 创建Vue的实例对象
+    const vm = new Vue({
+      el: '#app',
+      // 数据对象
+      data: {
+        firstName: '东方',
+        lastName: '不败',
+        fullName2: ''
+      },
+      // 计算属性:某个数据的值改变,相关联的数据会自动的变化（什么时候会用,理解这句话）
+      computed: {
+        // 获取的操作---get操作
+        fullName1() {
+          // 返回结果
+          return this.firstName + '_' + this.lastName
+        },
+        fullName3: {
+          // get操作
+          get() {
+            return this.firstName + '_' + this.lastName
+          },
+          // set操作
+          set(val) { //val中就会存储你设置的值
+            // fullName3='东方_不败'
+            const name = val.split('_')
+            this.firstName = name[0]
+            this.lastName = name[1]
+
+          }
+        }
+      },
+      // 监视:某个数据变化了,想要做相关的事情
+      watch: {
+        // 监视firstName 如果这个数据变化了,fullName2也要变化
+        firstName(val) { // val里面存储了firstName的值
+          this.fullName2 = val + '_' + this.lastName
+        },
+        // lastName(val) { // val里面存储了lastName的值
+        //   this.fullName2 = this.firstName + '_' + val
+        // },
+      }
+    })
+
+// 参数1:要监视的属性的名字,参数2是一个回调,要做的事情,都在回调中完成(不要使用箭头函数,原因,自己试一下)
+    vm.$watch('lastName', function (val) {
+      this.fullName2 = this.firstName + '_' + val
+    })
+
+
+    /**
+     * Vue中通过计算属性的方式实现:某个属性的值发生改变,相关联的属性的值会自动的发生改变
+     *
+     * 监视:我可以监视一个属性,如果该属性变化了,我就在监视中做相应的操作
+     *
+     * 计算属性:computed
+     * 计算属性内部如果直接书写某个----> 属性(){}是get操作
+     * 如果书写是下面的情况--->有get也有set
+     * 属性名字:{
+     *  get(){},
+     *  set(){}
+     * }
+     * 注意:get中一定要有return--->用来返回
+     *
+     * 监视:
+     * watch:{
+     *  属性名字(val){
+     *  val就是当前这个属性的值
+     *
+     *  }
+     * }
+     * 监视也可以放在外部书写,但是要注意:vm.$watch('属性的名字',function(){  }),不要用箭头函数,否则this的指向会发生变化
+     *
+     *
+     */
+
+
+  </script>
+</body>
+
+</html>
