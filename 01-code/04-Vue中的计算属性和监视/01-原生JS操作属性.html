@@ -19,42 +19,48 @@
       firstName: '东方', // 姓氏
       lastName: '不败' // 名字
     }
-
-    // 可以使用Object下的某个方法,让这三个属性(这些属性真正的关联起来)
-    /**
+    // Object对象下的某个方法,让这些属性相关联起来
+    /*
       该方法的作用:为某个对象添加一个属性,并且可以设置该属性的值的操作
-      参数1: 某个对象,为某个对象添加属性,这个参数就是这个对象
-      参数2: 要添加的属性名字,字符串的类型
-      参数3: 配置对象(这个对象中都是成对的键值对)
-    
-     */
+      参数1:某个对象,为某一个对象添加什么属性,这里的对象就是第一个参数
+      参数2:要添加的属性的名字----字符串类型
+      参数3:配置对象(可以设置该属性的相关的操作的配置)
+
+    */
     Object.defineProperty(person, 'fullName', {
-      configurable: false, // 默认值是false,表示的是该属性是否可以被修改
-      enumerable: false, // 默认值是false,表示的是该属性是否可以被枚举(遍历)
-      // value:'哈_哈', // 该属性的默认值
-      // writable:true, // 默认值是false,表示的是该属性的值是可以被修改
+      configurable: false, //默认值是false,表示的是该属性是否可以被修改
+      enumerable: false, // 默认值是false,表示的上司该属性是否可以被枚举(遍历的意思)
+      // value:'真_香' ,  // 该属性的默认值
+      // writable:true, // 默认是false,表示的是该属性的值是否可以被修改
       get() {
-        // 获取操作,什么时候会进入到get方法内部,当外部使用person.fullName的时候就会进入到get方法内部来了,如:console.log(person.fullName)--->这个操作就会进入到这里
         return this.firstName + '_' + this.lastName
-      },
+      }, // 获取该属性值的操作方法
       set(val) {
-        //person.fullName='上官_凤梨'  姓氏:上官--->firstName   名字:凤梨--->lastName
-        // 设置操作,什么时候会进入到set方法内部,当前部使用person.fullName赋值的时候就会进入到set内部来了,如: person.fullName='上官_凤梨' ---这个操作就会进入到这里了
+        // 外部的代码如下:
+        // person.fullName='杨帆_起航' person.firstName--->杨帆   person.lastName--->起航
         const name = val.split('_')
         this.firstName = name[0]
         this.lastName = name[1]
-      }
+      } // 设置该属性值的操作方法
+
     })
+
 
     // 显示姓名(姓氏和名字)
     person.fullName = person.firstName + '_' + person.lastName
     console.log(person.fullName)
+    // 修改姓氏
     person.firstName = '诸葛'
+    // 修改名字
     person.lastName = '孔明'
-    // 某个属性的值改变了,但是相关联的属性的值没有变化
+    // 显示姓名
     console.log(person.fullName)
-    person.fullName = '欧阳_健哥'
+    // 直接修改姓名,查看姓氏和名字是否改变
+    person.fullName = '欧阳_华哥'
     console.log(person.firstName, person.lastName)
+
+
+
 
   </script>
 
