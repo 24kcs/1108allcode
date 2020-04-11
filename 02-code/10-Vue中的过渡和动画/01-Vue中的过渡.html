@@ -11,33 +11,98 @@
 	<style type="text/css">
 		/* 过渡的样式 */
 
-		.fade-enter-active,
-		.fade-leave-action {
-			transition: opacity .5s
-		}
-
 		.fade-enter,
-		.fade-leave-to {
+		.fade-leave-to{
 			opacity: 0;
 		}
+
+		.fade-enter-active,
+		.fade-leave-active{
+			transition: opacity 3s;
+		}
+
+
+
+
+
+
+
+		/*
+		  进入的过渡效果----显示---->一开始是隐藏的效果----->显示出来的效果---->无--->有
+			无--->有----->三个阶段
+			无---->初始状态
+			无---->有---->慢慢的显示出来的这么一个阶段
+			有---->显示完毕的状态
+
+			离开的过渡效果----隐藏---->一开始显示的效果------->隐藏之后的效果--->有---->无
+			有--->无---->三个阶段
+			有----->一开显示的时候一个初始状态
+			有----->无--->慢慢的隐藏起来的这么一个阶段
+			无---->结束的状态
+		*/
+
+
+		/*进入的过渡的样式*/
+
+		/*显示的初始状态样式*/
+		/* .fade-enter{
+			opacity:0;
+		} */
+		/*显示过程中的状态样式*/
+		/* .fade-enter-active{
+			transition: opacity 3s;
+		} */
+		/*显示完毕的状态样式*/
+		/* .fade-enter-to{
+			opacity:1;
+		} */
+
+		/*离开的过渡的样式*/
+
+		/*隐藏的初始状态样式*/
+		/* .fade-leave{
+			opacity:1;
+		} */
+		/*隐藏过程中的状态样式*/
+		/* .fade-leave-active{
+			transition: opacity 3s;
+		} */
+		/*隐藏完毕的状态样式*/
+		/* .fade-leave-to{
+			opacity:0
+		} */
+
+
+
 	</style>
 </head>
 
 <body>
 	<div id="app">
-		<button @click="isOk=!isOk">切换效果</button>
+		<button @click="isShow=!isShow">显示效果</button>
 		<transition name="fade">
-				<p v-show="isOk">我是一个p标签</p>
+			<p v-show="isShow">哈哈,我又帅了</p>
 		</transition>
+
 	</div>
 
 	<script type="text/javascript">
 		const vm = new Vue({
 			el: '#app',
 			data: {
-				isOk: false
+				isShow: false
 			}
 		})
+
+
+	// 组件的概念及组件化的概念理解一下----画图的方式来理解
+	// 模块和模块化的概念
+
+	// 组件:具有特定功能效果的集合的封装
+	// 组件如何使用:组件可以按照标签的方式去使用
+	// 例子: Hello组件    <hello></hello> 组件的使用方式
+	// Vue中的内置组件:transition  ----主要作用用来做过渡效果的
+	// 组件大小写的问题:组件在使用的时候可以大写也可以小写,但是也有区别:在脚手架中来演示
 	</script>
 </body>
 

@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>每天都被自己帅醒!</title>
-        <link rel="stylesheet" href="">
-        <script type="text/javascript" src="../js/vue.js"></script>
-    </head>
-    <body>
-    
-        <div id="app">
-            <p>显示结果:{{content}}</p>
-           <p v-text="content">{{content}}</p>
-           <a v-html="content">百度</a>
-        </div>
-        <script type="text/javascript">
 
-        /**
-         * 
-         * 指令的作用:就是操作标签
-         * v-text:纯文本
-         * v-html:html标签内容
-         * ref:为某个元素注册一个唯一的标识,vue对象通过$refs.这个属性值即可访问该元素对象
-         * 
-         * 
-        */
-         const vm = new Vue({
-             el:'#app',
-             data:{
-                 content:'<a href="http://www.baidu.com">百度</a>'
-             },
-             methods: {
-                handleClick(){
-                    this.$refs.p1.innerHTML=this.content
-                }
-             }
-         })
-        </script>
-    </body>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>每天都被自己帅醒!</title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+
+	<div id="app">
+		<!--插值语法,必然会显示表达式中的内容-->
+		<p>{{content}}</p>
+		<hr>
+		<!--在p标签中间显示的和插值语法效果一样的-->
+		<p v-text="content"></p>
+		<!--在p标签中间显示a标签的效果-->
+		<p v-html="content"></p>
+	</div>
+	<script type="text/javascript">
+
+		const vm = new Vue({
+			el:'#app',
+			data:{
+				content:'<a href="http://www.baidu.com">百度</a>'
+			}
+		})
+
+		/*
+			Vue中的指令:内置指令和自定义指令
+			内置指令(系统自带的指令):
+			  v-model
+				v-bind
+				v-on
+				v-for
+				v-if v-else  v-else-if
+				v-show
+				v-text:相当于DOM中的innerText/textContent----和{{}}插值语法的结果相同类似
+				v-html:相当于DOM中的innerHTML
+				标签中间如果设置内容,在DOM中使用的是innerText/textContent,在Vue中可以使用插值语法或者v-text指令
+				想要达到DOM中innerHTML的效果,此时在Vue中推荐使用v-html指令
+
+				面试题:说说Vue中的常见7个指令,每个指令什么意思,什么使用会用到这个指令
+				
+
+			自定义指令:自己定义的指令
+		
+		
+		*/
+	</script>
+</body>
+
 </html>

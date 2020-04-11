@@ -15,7 +15,10 @@
 		<h2>显示格式化的日期时间</h2>
 		<h2>{{time}}</h2>
 		<h2>{{time|formatTime}}</h2>
-		<h2>{{time|formatTime2}}</h2>
+		<h2>{{time|formatTime2('YYYY-MM-DD')}}</h2>
+		<h2>{{time|formatTime3}}</h2>
+		<h2>{{time|formatTime4('YY-MM-DD')}}</h2>
+
 	</div>
 
 	<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
@@ -42,13 +45,36 @@
 		 * 
 		 * 
 		*/
-		//定义过滤器:
 
+
+		//1.定义一个全局过滤器:
+		//2.可以使用过滤器
+
+
+
+		// 参数1:过滤器的名字
+		// 参数2:回调函数(是一个要格式化的数据)
 		Vue.filter('formatTime', value => {
 			return moment(value).format('YYYY-MM-DD hh:mm:ss')
 		})
-		Vue.filter('formatTime2',(value,formatString='YYYY-MM-DD hh:mm:ss')=>{
-			return moment(value).format(formatString)
+
+		Vue.filter('formatTime2', (value,str) => {
+			// value---->要格式的数据
+			// str---->格式化数据的基本格式----字符串
+			return moment(value).format(str)
+		})
+
+		Vue.filter('formatTime3', (value,str='hh:mm:ss') => {
+			// value---->要格式的数据
+			// str---->格式化数据的基本格式----字符串
+			return moment(value).format(str)
+		})
+
+
+		Vue.filter('formatTime4', (value,str) => {
+			// value---->要格式的数据
+			// str---->格式化数据的基本格式----字符串
+			return moment(value).format(str||'hh:mm:ss')
 		})
 		const vm = new Vue({
 			el: '#app',
@@ -56,8 +82,8 @@
 				time: Date.now()
 			}
 		})
+		// 过滤器的目的:一般就是格式化数据
 
-		
 	</script>
 </body>
 

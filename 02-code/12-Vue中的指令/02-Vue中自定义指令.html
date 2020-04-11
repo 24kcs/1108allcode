@@ -2,75 +2,87 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>每天都被自己帅醒!</title>
-    <link rel="stylesheet" href="">
-    <script type="text/javascript" src="../js/vue.js"></script>
-    <style type="text/css">
-        p {
-            border: 1px solid red;
-        }
-    </style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>每天都被自己帅醒!</title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript" src="../js/vue.js"></script>
+	<style type="text/css">
+		p {
+			border: 1px solid red;
+		}
+	</style>
 </head>
 
 <body>
-    <div id="app">
-        <p v-upper-text="msg"></p>
-        <p v-lower-text="msg"></p>
-    </div>
-    <div id="app2">
-        <p v-upper-text="msg"></p>
 
-    </div>
-    <script type="text/javascript">
-        /**
-         * Vue提供了自定义指令的方法
-         * 1.注册全局指令
-         * Vue.directive('指令名字',function(el,binding){})
-         * 2.注册局部指令
-         * 在Vue的配置中
-         * directives:{
-         * '指令名字'(el,binding){
-         * el.innerHTML=binding.value.toUpperCase()
-         * }
-         * }
-         * 
-         * el:element---指令属性所爱的标签对象
-         * binding:包含指令相关数据的对象容器,里面有value值就是标签中的值
-         * 区别:全局的指令作用范围更大,局部的指令只能在自己的包裹的标签中使用
-         * 
-         * 
-         * 
-         */
+	<div id="app">
+		<p v-upper-text="msg"></p>
+		<p v-lower-text="msg"></p>
+	</div>
+
+	<div id="app2">
+		<p v-upper-text="msg"></p>
+	</div>
+	<script type="text/javascript">
+
+		/*
+		因为不满足,所以才会出现自定义的东西
+		Vue中的内置指令不够用,不满足现状,所以,就出现了自定义指令的
+
+		Vue.出来的必然是全局的
+		vm.出来必然是实例对象的,一般实例对象点出来的,几乎都是$开头
+
+		Vue.directive()定义指令----全局自定义指令
+
+		Vue中自定义指令:全局自定义指令和局部自定义指令
+		
+		*/
+
+		// 需求:某个标签使用自定义指令后,标签中的文本内容全部变成大写
+
+		// 定义一个全局自定义指令 
+		Vue.directive('upper-text', function (el, binding) {
+			el.innerHTML = binding.value.toUpperCase()
+		})
+
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				msg: 'what Are yOu no Sha lei'
+			},
+			// 局部自定义指令
+			directives: {
+				'lower-text'(el, binding) {
+					el.innerHTML = binding.value.toLowerCase()
+				}
+			}
+		})
+
+		const vm2 = new Vue({
+			el: '#app2',
+			data: {
+				msg: 'what Are yOu no Sha lei'
+			}
+		})
 
 
-        // 全局指令
-        Vue.directive('upper-text', function (el, binding) {
-            el.textContent = binding.value.toUpperCase()
-        })
+		/*
+			自定义指令的方式:
+			1.全局指令
+			2.局部指令
+			1.定义全局指令:
+			 参数1:指令的名字,不能有v-开头,但是,使用的时候是v-开头来使用的
+			 参数2:是一个回调函数,内部有两个参数常用:el,bidning
+			 el是标签元素(使用了这个指令的标签)
+			 binding是一个对象,可以获取使用了指令的这个标签中的数据
 
-        const vm = new Vue({
-            el: '#app',
-            data: {
-                msg: 'what Are you No sha lei'
-            },
-            // 局部指令
-            directives: {
-                'lower-text'(el, binding) {
-                    el.innerHTML = binding.value.toLowerCase()
-                }
-            }
-        })
+			全局的自定义指令页面的任何位置都可以使用,但是局部的自定义指令是不能随便使用的
 
-        const vm2 = new Vue({
-            el: '#app2',
-            data: {
-                msg: 'what Are you No sha lei'
-            }
-        })
-    </script>
+
+		*/
+	</script>
 </body>
 
 </html>

@@ -12,60 +12,67 @@
 
 <body>
 	<div id="app">
-
-
-		<button @click="clear">显示效果</button>
-		<button @click="updateText">更新数据</button>
-		<p v-show="isShow">你打我啊</p>
+		<button @click="clear">干掉vm实例</button>
+		<button @click="updateShow">更新数据</button>
+		<p v-show="isShow">桃花潭水深千尺,不及汪伦送我情</p>
 	</div>
 	<script type="text/javascript">
+		// Vue中的生命周期钩子(回调函数----自动的去调用的)
 		const vm = new Vue({
 			el: '#app',
 			data: {
 				isShow: false
 			},
-			// 数据初始化之前
-		 beforeCreate () {
-			 	console.log('数据初始化之前',this.isShow)
-		 },
-		 // 数据初始化之后
-		 created () {
-			console.log('数据初始化之后',this.isShow)
-		 },
-		 // 界面显示之前
-		 beforeMount () {
-			console.log('界面初始化之前')
-		 },
-		 // 界面渲染后
-		 mounted () {
-			 console.log('界面初始化之后')
-		 },
-		 // 界面更新之后
-		 beforeUpdate () {
-			 console.log('界面更新之前')
-		 },
-		 // 界面更新之后
-		 updated () {
-			 console.log('界面更新之后')
-		 },
-		 // 组件卸载之前
-		 beforeDestroy () {
-			 console.log('组件卸载后')
-		 },
-		 destroyed () {
-			 console.log('组件下载之后')
-		 },
-		 methods: {
-			updateText(){
-				this.isShow=!this.isShow
+			// 数据初始化之前的生命周期回调
+			beforeCreate () {
+				console.log('数据初始化之前1',this.isShow) // undefined
 			},
-			clear(){
-				this.$destroy()
+			// 数据初始化之后的生命周期回调
+			created () {
+				console.log('数据初始化之后2',this.isShow) // false
+			},
+			// 页面渲染之前的生命周期回调
+			beforeMount () {
+				console.log('页面渲染之前3')
+			},
+			// 页面渲染之后的生命周期回调
+			mounted () {
+				console.log('页面渲染之后4')
+			},
+			// 页面重新更新之前的生命周期回调
+			beforeUpdate () {
+				// isShow的数据变化了,但是页面还没有开始重新渲染呢,马上就要开始重新渲染界面
+				console.log('页面更新之前5',this.isShow) // true
+			},
+			// 页面更新之后的生命周期回调
+			updated () {
+				console.log('页面更新之后6',this.isShow) // true
+			},
+			// 销毁实例之前的生命周期回调
+			beforeDestroy () {
+				console.log('销毁之前7')
+			},
+			// 销毁实例之后的生命周期回调
+			destroyed () {
+				console.log('销毁之后8')
+			},
+			// 写方法的地方
+			methods: {
+				// 点击按钮修改数据的值
+				updateShow(){
+					this.isShow=!this.isShow
+				},
+				// 干掉vm实例对象
+				clear(){
+					this.$destroy()
+				}
 			}
-		 }
 
 		})
-     
+	
+		// 谈谈你对Vue的理解---笼统
+		// Vue的特点,借鉴了哪些框架的优点,有数据绑定,指令...... Vue的生命周期,Vuex,组件之间的通信...其实React和Vue有一些相同点,再说说不同点.....都可以把前端的其他的知识点都回答出来,
+		// 说说你对Vue的生命周期的理解---直白,回答完毕后可以尝试着说说React的生命周期,最终对比两个框架的不同
 	</script>
 </body>
 
