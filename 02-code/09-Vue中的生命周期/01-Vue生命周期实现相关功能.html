@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>每天都被自己帅醒!</title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<button @click="clear">干掉vm实例和定时器</button>
+		<p v-show="isShow">你笑起来真好看</p>
+
+	</div>
+	<script type="text/javascript">
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				isShow: false
+			},
+			// 销毁vm实例对象之前的回调函数
+			beforeDestroy () {
+				clearInterval(this.timeId)
+			},
+			// 界面渲染完毕
+			mounted () {
+				this.timeId=setInterval(() => {
+					this.isShow=!this.isShow
+					console.log('定时器启动着呢')
+				}, 1000);
+			},
+			methods: {
+				// 干掉vm实例对象
+				clear(){
+					this.$destroy()
+				}
+			}
+
+		})
+
+		// vm实例对象创建的时候就会自动的产生自己的声明周期(11个回调函数,常用的有8个)
+
+	</script>
+</body>
+
+</html>
