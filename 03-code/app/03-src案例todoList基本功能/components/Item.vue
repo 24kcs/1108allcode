@@ -1,48 +1,50 @@
 <template>
   <li
-  @mouseenter="mouseHandle(true)"
-  @mouseleave="mouseHandle(false)"
-  :style="{color:fontColor,backgroundColor:bgColor}"
+    @mouseenter="mouseHandle(true)"
+    @mouseleave="mouseHandle(false)"
+    :style="{color:fontColor,backgroundColor:bgColor}"
   >
     <label>
       <input type="checkbox" v-model="isCheck" />
       <span>{{todo.title}}</span>
     </label>
-    <button class="btn btn-danger" v-show="isShow" @click="del">删除</button>
+    <button class="btn btn-danger" v-show="isShow" @click="delTodo">删除</button>
   </li>
 </template>
 <script>
 export default {
   name: 'Item',
+  // 组件通信,props 方式, props不同的写法
   props: {
-    todo: Object,
+    todo: Object, // 设置todo数据是对象的类型
     deleteTodo: Function,
     index: Number,
     toggleTodo: Function
   },
   data () {
     return {
-      fontColor: 'black',
-      bgColor: 'white',
-      isShow: false
+      fontColor: 'black', // 文字的颜色
+      bgColor: 'white', // 背景颜色
+      isShow: false // 默认按钮是隐藏的
     }
   },
   methods: {
-    // 鼠标进入和离开事件
+    // 鼠标进入和离开的事件
     mouseHandle (flag) {
-      if (flag) {
-        this.bgColor = 'gray'
-        this.fontColor = 'pink'
+      if (flag) { // 鼠标进入事件
+        this.fontColor = 'green'
+        this.bgColor = 'pink'
         this.isShow = true
-      } else {
-        this.bgColor = 'white'
+      } else { // 鼠标离开事件
         this.fontColor = 'black'
+        this.bgColor = 'white'
         this.isShow = false
       }
     },
-    // 删除操作
-    del () {
-      if (confirm('确定要删除吗')) {
+    // 删除数据
+    delTodo () {
+      // 友好的删除提示信息
+      if (confirm('您确定删除吗')) {
         this.deleteTodo(this.index)
       }
     }

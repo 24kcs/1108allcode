@@ -1,6 +1,6 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" @keyup.13="add" v-model="title" />
+    <input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="title" v-on:keyup.13="add" />
   </div>
 </template>
 <script>
@@ -8,28 +8,31 @@ export default {
   name: 'Header',
   props: {
     addTodo: {
-      type: Function,
-      required: true
+      type: Function, // 设置当前的addTodo的类型是Function
+      required: true // 这个方法是必须的
     }
   },
   data () {
     return {
-      title: '' // 文本框中输入的数据
+      title: '' // 用来存储文本框的数据
     }
   },
+  // 书写方法的对象
   methods: {
+    // 添加数据的方法
     add () {
+      // 干掉空格
       const title = this.title.trim()
+      // 判断文本框中录入的数据是否为空
       if (title) {
-        // 定义todo对象
         const todo = {
           id: Date.now(),
           title,
           isCompleted: false
         }
-        // 调用方法添加todo
+        // 调用父级组件传递过来的添加数据的方法
         this.addTodo(todo)
-        // 清空文本框
+        // 清空文本框的数据
         this.title = ''
       }
     }

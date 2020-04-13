@@ -4,18 +4,19 @@
   </ul>
 </template>
 <script>
-// 引入Item组件
+// 引入Item 组件
 import Item from './Item'
 export default {
   name: 'List',
-  props: ['todos', 'deleteTodo', 'toggleTodo'],
+  // 注册组件
   components: {
     Item
-  }
+  },
+  // 实现组件之间通信,传递数据
+  props: ['todos', 'deleteTodo', 'toggleTodo']
 }
 </script>
 <style scoped>
-
 /*main*/
 .todo-main {
   margin-left: 0px;

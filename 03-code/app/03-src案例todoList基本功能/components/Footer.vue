@@ -16,10 +16,13 @@ export default {
     todos: Array,
     checkAllTodo: Function
   },
+  // 计算属性
   computed: {
+    // 已经完成的数量(选中的个数)
     count () {
       return this.todos.reduce((pre, todo) => pre + (todo.isCompleted ? 1 : 0), 0)
     },
+    // 全选/全不选的计算属性
     checkAll: {
       get () {
         return this.count === this.todos.length && this.count > 0

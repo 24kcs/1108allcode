@@ -1,18 +1,72 @@
 <template>
-  <li>
+  <li
+    @mouseenter="mouseHandle(true)"
+    @mouseleave="mouseHandle(false)"
+    :style="{color:fontColor,backgroundColor:bgColor}"
+  >
     <label>
-      <input type="checkbox" v-model="todo.isCompleted" />
+      <input type="checkbox" v-model="isCheck" />
       <span>{{todo.title}}</span>
     </label>
-    <button class="btn btn-danger" style="display:none">删除</button>
+    <button class="btn btn-danger" v-show="isShow" @click="delTodo">删除</button>
   </li>
 </template>
 <script>
+// 引入PubSub
+import PubSub from 'pubsub-js'
 export default {
   name: 'Item',
   // 组件通信,props 方式, props不同的写法
-  props: {
-    todo: Object // 设置todo数据是对象的类型
+  // props: {
+  //   todo: Object, // 设置todo数据是对象的类型
+  //   deleteTodo: Function,
+  //   index: Number,
+  //   toggleTodo: Function
+  // },
+   props: {
+    todo: Object, // 设置todo数据是对象的类型
+    index: Number,
+    toggleTodo: Function
+  },
+  data () {
+    return {
+      fontColor: 'black', // 文字的颜色
+      bgColor: 'white', // 背景颜色
+      isShow: false // 默认按钮是隐藏的
+    }
+  },
+  methods: {
+    // 鼠标进入和离开的事件
+    mouseHandle (flag) {
+      if (flag) { // 鼠标进入事件
+        this.fontColor = 'green'
+        this.bgColor = 'pink'
+        this.isShow = true
+      } else { // 鼠标离开事件
+        this.fontColor = 'black'
+        this.bgColor = 'white'
+        this.isShow = false
+      }
+    },
+    // 删除数据
+    delTodo () {
+      // 友好的删除提示信息
+      if (confirm('您确定删除吗')) {
+        PubSub.publish('deleteTodo', this.index)
+        // this.deleteTodo(this.index)
+      }
+    }
+  },
+  // 计算属性
+  computed: {
+    isCheck: {
+      get () {
+        return this.todo.isCompleted
+      },
+      set () {
+        this.toggleTodo(this.todo)
+      }
+    }
   }
 }
 </script>
@@ -40,7 +94,7 @@ li label li input {
 
 li button {
   float: right;
-  display: none;
+  /* display: none; */
   margin-top: 3px;
 }
 

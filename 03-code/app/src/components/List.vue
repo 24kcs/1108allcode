@@ -1,6 +1,8 @@
 <template>
   <ul class="todo-main">
-    <Item v-for="(todo,index) in todos" :key="index" :todo="todo" />
+    <!-- <Item v-for="(todo,index) in todos" :key="index" :todo="todo" :deleteTodo="deleteTodo" :index="index" :toggleTodo="toggleTodo" /> -->
+
+     <Item v-for="(todo,index) in todos" :key="index" :todo="todo" :index="index" :toggleTodo="toggleTodo" />
   </ul>
 </template>
 <script>
@@ -13,7 +15,8 @@ export default {
     Item
   },
   // 实现组件之间通信,传递数据
-  props: ['todos']
+  // props: ['todos', 'deleteTodo', 'toggleTodo']
+  props: ['todos', 'toggleTodo']
 }
 </script>
 <style scoped>
