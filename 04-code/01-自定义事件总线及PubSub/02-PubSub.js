@@ -43,17 +43,49 @@
   }
   // 异步发布消息
   PubSub.publish = function (msg, data) {
-
+    // 根据消息名字去大的容器对象中查找 当前消息对应的回调函数容器对象
+    // {add:{id_1:f1,id_2:f2},'del':{id_3:f3}}
+    let subscribers = subscribersContainer[msg]
+    setTimeout(() => {
+      // 判断小容器对象是否存在
+      if (subscribers) {
+        // 对象转数组
+        Object.values(subscribers).forEach(subscriber => {
+          subscriber(data)
+        })
+      }
+    }, 1000);
   }
-
   // 同步发布消息
   PubSub.publishSync = function (msg, data) {
-
+    // 根据消息名字去大的容器对象中查找 当前消息对应的回调函数容器对象
+    // {add:{id_1:f1,id_2:f2},'del':{id_3:f3}}
+    let subscribers = subscribersContainer[msg]
+    // 判断小容器对象是否存在
+    if (subscribers) {
+      // 对象转数组
+      Object.values(subscribers).forEach(subscriber => {
+        subscriber(data)
+      })
+    }
   }
 
   // 取消消息订阅
   PubSub.unsubscribe = function (token) {
-
+    // token---标识,token有可能是标识,有可能是消息名字,还有可能什么也没传
+    // 没有传入任何的token 
+    if (typeof token === 'undefined') {
+      subscribersContainer = {}
+    } else if (token.indexOf('id_') !== -1) {
+      // 传入的token确实是一个有规则的标识 token='id_1'
+      // {add:{id_1:f1,id_2:f2},'del':{id_3:f3}}--->数组
+      // 数组: [{id_1:f1,id_2:f2},{id_3:f3}]
+      const subscribers = Object.values(subscribersContainer).find(subscribers => subscribers[token])
+      subscribers && delete subscribers[token]
+    } else {
+      // 传入的是一个消息名字---'add'
+      delete subscribersContainer[token]
+    }
   }
 
   // 暴露出去
