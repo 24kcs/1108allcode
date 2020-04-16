@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>玉树临风美少年，揽镜自顾夜不眠 </title>
+</head>
+<body>
+  <div id="demo">
+    <p>华哥喜欢健哥</p>
+    <p>健哥喜欢禹哥</p>
+    <p>禹哥喜欢华哥</p>
+  </div>
+  <script type="text/javascript">
+    // 伪数组如何转成 真数组
+    const list1 = document.getElementsByTagName('p')
+    // console.log(list1 instanceof Array)
+    const list2 = [...list1]
+    const list3 = Array.from(list1)
+    const list4 = Array.prototype.slice.call(list1)
+    const list5 = [].slice.call(list1)
+    console.log(list1 instanceof Array)
+    console.log(list2 instanceof Array)
+    console.log(list3 instanceof Array)
+    console.log(list4 instanceof Array)
+    console.log(list5 instanceof Array)
+    console.log('===========================')
+    // 节点:页面中所有的东西都可以叫节点, 节点,元素,标签
+    // 标签:页面中的html标签 ,元素:标签就叫元素
+    // 节点: 标签,属性,文本
+    // 节点也是有类型,可以通过nodeType属性获取的:1---标签节点,2---属性节点,3---文本节点
+    const eleNode = document.getElementById('demo')
+    const attrNode = eleNode.getAttributeNode('id')
+    const txtNode = eleNode.firstChild
+    console.log(eleNode.nodeType)  // 1 标签
+    console.log(attrNode.nodeType)  // 2 属性
+    console.log(txtNode.nodeType)  // 3 文本
+
+
+    //  Vuex中有一个图解---明天早上回来复习的时候绘制出来  modules 对象---后面讲,路由传参的不同方式总结及演示--后面讲
+    // 明天Vue源码分析(先复习)
+  </script>
+</body>
+</html>
