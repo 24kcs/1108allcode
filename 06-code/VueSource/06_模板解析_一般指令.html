@@ -13,25 +13,34 @@
       color: red;
 
     }
-    .cls2{
+
+    .cls2 {
       font-size: 50px;
     }
   </style>
 </head>
 
 <body>
+
+  <!-- <div id="app">
+    <p v-text="msg"></p>
+  </div> -->
+
   <div id="app">
-    <p v-class="classA" class="cls2">this is p</p>
+    <p v-html="msg"></p>
   </div>
   <script type="text/javascript">
     const vm = new MVVM({
       el: '#app',
       data: {
-        classA:'cls',
-        content: '<a href="http://www.baidu.com">百度</a>'
-      },
+        // msg: '源码真香'
+        msg: '<a href="http://www.baidu.com">百度</a>'
+      }
     })
 
+    // v-class
+      // classA:'cls',
+        // content: '<a href="http://www.baidu.com">百度</a>'
     // var obj={
     //   sayHi:function(){}
     // }

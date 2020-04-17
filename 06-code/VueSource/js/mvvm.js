@@ -19,6 +19,7 @@ function MVVM(options) {
     // 劫持和消息订阅
     observe(data, this);
     // 模版解析
+    // 创建编译对象的时候,传入了el选择器或者传入了body标签对象,还有当前的vm这个实例对象
     this.$compile = new Compile(options.el || document.body, this)
 }
 // Vue的原型对象
@@ -35,7 +36,6 @@ MVVM.prototype = {
         setter = setter || 
         // 为vm实例对象添加msg的属性------>vm.msg,并且重新的设置的配置信息
         Object.defineProperty(me, key, {
-
             configurable: false, // 是否可以重新设置该属性
             enumerable: true, // 当前的属性可以进行遍历
             // 重写了get
