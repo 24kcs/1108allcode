@@ -173,8 +173,9 @@ var compileUtil = {
         //  updaterFn && updaterFn('{{msg}}', '绣花枕头');
         updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
-
-        // 监视===============================
+        // ============dir----指令,exp---表达式
+        // 监视对象
+        // 第一个参数:vm实例对象,第二个参数:exp表达式,第三个参数是回调函数
         new Watcher(vm, exp, function(value, oldValue) {
             updaterFn && updaterFn(node, value, oldValue);
         });

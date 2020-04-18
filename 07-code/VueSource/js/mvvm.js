@@ -16,22 +16,11 @@ function MVVM(options) {
     });
 
     this._initComputed(); // 计算属性的初始化----不分析
-
-
-
     // 劫持和消息订阅
-
-
     // data是一个变量(对象,存储的是vm实例对象中的data属性),this----vm实例对象
     // 调用observe 方法传入data对象,和vm实例对象
     // 劫持数据
     observe(data, this);
-
-
-
-
-
-
     // 模版解析
     // 创建编译对象的时候,传入了el选择器或者传入了body标签对象,还有当前的vm这个实例对象
     this.$compile = new Compile(options.el || document.body, this)
@@ -56,6 +45,7 @@ MVVM.prototype = {
             get: function proxyGetter() {
                 // me--vm对象._data中key---->vm._data['msg']   如果你要访问vm.msg属性实际上是从vm._data.msg中获取的
                 // 只要是想获取msg属性必然会进入到这个get方法内部,
+                // vm._data['msg']
                 return me._data[key];
             },
             // 重写了set

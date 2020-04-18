@@ -49,6 +49,7 @@ Observer.prototype = {
 
             // 如果有一天你用到了data对象中的属性的时候,那么就会进入到当前的get方法或者是set方法
             get: function() {
+                // Dep.target中是有数据的============Watcher的实例对象
                 if (Dep.target) {
                     // 说明此时Dep.target属性中不是空(那就是有值的情况,才进入if判断)
                     dep.depend();
@@ -90,11 +91,17 @@ function Dep() {
 }
 // 大的Dep的原型对象
 Dep.prototype = {
+    // 把watcher对象添加到当前对应的dep对象中
+    // sub就是Watcher的实例对象
     addSub: function(sub) {
+        // this---dep对象,sub---------- Watcher的实例对象
+        // 把Watcher实例对象添加到当前的dep的subs数组中
         this.subs.push(sub);
     },
-
+    // ============================= 开始建立dep和watcher对象的联系  (Watcher的实例对象)
     depend: function() {
+        // Dep.target中存储的是Watcher的实例对象
+        // watcher.addDep(dep对象)
         Dep.target.addDep(this);
     },
 
