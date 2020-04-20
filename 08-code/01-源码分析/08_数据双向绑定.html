@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>06_模板解析_一般指令</title>
+  <script src="./js/mvvm.js"></script>
+  <script src="./js/compile.js"></script>
+  <script src="./js/observer.js"></script>
+  <script src="./js/watcher.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <p>{{msg}}</p>
+  </div>
+  <script type="text/javascript">
+    const vm = new MVVM({
+      el: '#app',
+      data: {
+        msg:'哈哈'
+      },
+    })
+    /**
+     * 
+     * 双向数据绑定:
+     * 创建Vue的实例的时候,除了数据绑定和数据劫持以外,会进入到compile模版解析中,在内存中创建文档碎片对象,把html容器中所有的子级节点全部的存放在文档碎片对象中,遍历所有的节点判断当前的节点是不是标签,然后获取当前节点标签中所有的属性,判断当前的属性是不是指令,然后再判断当前的指令是不是普通指令v-model,再然后为当前的节点标签绑定input事件
+     * 如果标签中的数据发生变化,此时触发input事件,判断表达式之前的数据和现在输入的数据是否不同,之后会进入到MVVM的set方法内部再进入到observer.js的set方法内部,根据当前的这个属性的dep对象通知当前dep对象中subs数组中的watcher进行数据的更新操作
+     * 
+     * 
+     * 
+     */
+
+   
+  </script>
+</body>
+
+</html>

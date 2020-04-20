@@ -1,0 +1,13 @@
+div {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #f00;
+  background-color: #008000;
+}
+div p {
+  width: 100px;
+  height: 30px;
+  font-family: '全新硬笔行书简';
+  color: #00f;
+  background-color: #808080;
+}
