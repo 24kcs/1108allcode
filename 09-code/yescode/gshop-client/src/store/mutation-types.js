@@ -1,0 +1,1 @@
+// 包含多个mutation的type
