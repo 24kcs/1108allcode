@@ -29,9 +29,9 @@
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <a class="logo" title="尚品汇" href="###" target="_blank">
-          <img src="./images/Logo.png" alt />
-        </a>
+        <router-link class="logo" to="/">
+          <img src="./images/logo.png" alt />
+        </router-link>
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
@@ -76,11 +76,29 @@ export default {
       // 路由传参:params
       // this.$router.push('/search/123')
       // this.$router.push(`/search/${this.keyword}`)
-      // 路由传参:query传参
-      // this.$router.push(`/search?keyword=${this.keyword}`)
-      
 
-      this.$router.push(`/search/${this.keyword}`)
+
+
+      // 自己试试这四个方式
+      // 路由传参:params传参---字符串
+      // this.$router.push(`/search/${this.keyword}`)
+      // 路由传参:query传参----字符串
+      // this.$router.push(`/search?keyword=${this.keyword}`)
+      // 或者
+      // query传参---对象
+      // this.$router.push({ path: '/search' ,query:{keyword:this.keyword}})
+      // params传参---对象
+      // this.$router.push({ name: 'search' ,params:{keyword:this.keyword}})
+
+      // 暂且使用这个,没有任何参数的情况下,无法跳转
+      // this.$router.push({ name: 'search' ,params:{keyword:this.keyword}})
+
+      // 判断是否有关键字,
+      if(this.keyword){ // 有参数就跳转并且传参
+        this.$router.push({ name: 'search' ,params:{keyword:this.keyword}})
+      }else{ // 没有参数但是也需要跳转
+        this.$router.push({ name: 'search'})
+      }
     }
   }
 }
@@ -88,6 +106,10 @@ export default {
 // 路由器一旦注册后,每个组件中都会出现两个对象
 // $router 路由器对象,可以调用相关的方法,实现编程式的路由跳转
 // $route 路由组件信息对象,可以获取路由传递的参数数据信息
+// 编程式路由进行跳转并传参数的时候:params和query的方式是有区别的
+// 编程式路由跳转及传递参数,可以使用字符串的方式,也可以使用对象的方式
+// 无论是query方式还是params方式.使用对象的方式传递参数的时候,都可以使用name属性,但是,如果使用path属性只能在query中,不能在params中
+
 </script>
 <style lang="less" rel="stylesheet/less" scoped>
 .header {

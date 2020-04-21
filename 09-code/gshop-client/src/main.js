@@ -4,8 +4,12 @@ import Vue from 'vue'
 import App from './App.vue'
 // 引入路由器
 import router from './router'
+// 引入商品分类导航TypeNav组件
+import TypeNav from './components/TypeNav'
 // 设置浏览器的控制台中是否显示默认提示信息
 Vue.config.productionTip = false
+// 注册全局组件(商品分类导航)
+Vue.component('TypeNav', TypeNav)
 // 创建Vue实例,并挂载
 new Vue({
   render: h => h(App),

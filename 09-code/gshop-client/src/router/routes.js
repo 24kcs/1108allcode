@@ -18,17 +18,24 @@ export default [
   // 注册路由组件
   {
     path: '/register',
-    component: Register
+    component: Register,
+    meta: {
+      isHideFooter: true // 是否隐藏Footer组件
+    }
   },
   // 登录路由组件
   {
     path: '/login',
-    component: Login
+    component: Login,
+    meta: {
+      isHideFooter: true // 是否隐藏Footer组件
+    }
   },
   // 搜索路由组件
   {
     // 路由传参
-    path: '/search/:keyword',
+    name: 'search', // 命名路由
+    path: '/search/:keyword?', // params参数可传可不传
     component: Search
   },
   // 重定向
