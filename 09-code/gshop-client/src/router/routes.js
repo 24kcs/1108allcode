@@ -27,7 +27,8 @@ export default [
   },
   // 搜索路由组件
   {
-    path: '/search',
+    // 路由传参
+    path: '/search/:keyword',
     component: Search
   },
   // 重定向

@@ -8,8 +8,10 @@
           <p>尚品汇欢迎您！</p>
           <p>
             <span>请</span>
-            <a href="###">登录</a>
-            <a href="###" class="register">免费注册</a>
+            <router-link to="/login">登录</router-link>
+            <router-link to="/register" class="register">免费注册</router-link>
+            <!-- <a href="###">登录</a>
+            <a href="###" class="register">免费注册</a>-->
           </p>
         </div>
         <div class="typeList">
@@ -33,8 +35,8 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input type="text" id="autocomplete" class="input-error input-xxlarge" />
-          <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
         </form>
       </div>
     </div>
@@ -42,8 +44,50 @@
 </template>
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data() {
+    return {
+      keyword: '' // 搜索关键字
+    }
+  },
+  // 方法
+  methods: {
+    // 跳转到Search组件界面
+    toSearch() {
+
+      
+      // 编程式路由进行跳转
+      // this.$router.push('/search') // 此时如果多次点击按钮进行编程式的路由跳转,控制台中会出现错误信息
+      // 方案1,每次路由跳转都要设置,一个成功的回调或者失败的回调(push和replace解决原理相同)
+      // this.$router.push('/search',()=>{}) // 传入成功的回调
+      // this.$router.push('/search',undefined,()=>{}) // 传入失败的回调
+      // this.$router.push('/search').then(()=>{}) 调用then()传入回调无法解决
+      // this.$router.push('/search').catch(()=>{}) // 指定一个catch()传入回调可以解决
+      // this.$router.push('/search',()=>{ // 成功的回调内部的代码是可以执行
+      //   console.log('华华最近又腰疼了')
+      // })
+      //
+      // this.$router.replace('/search')
+      // 方案2,使用统一种方式解决项目中所有的路由的跳转的bug---去router目录中的index.js文件中为路由器重写push或者replace方法
+      // this.$router.push('/search')
+
+      // 路由传参:params,query,props,meta
+
+      // 路由传参:params
+      // this.$router.push('/search/123')
+      // this.$router.push(`/search/${this.keyword}`)
+      // 路由传参:query传参
+      // this.$router.push(`/search?keyword=${this.keyword}`)
+      
+
+      this.$router.push(`/search/${this.keyword}`)
+    }
+  }
 }
+
+// 路由器一旦注册后,每个组件中都会出现两个对象
+// $router 路由器对象,可以调用相关的方法,实现编程式的路由跳转
+// $route 路由组件信息对象,可以获取路由传递的参数数据信息
 </script>
 <style lang="less" rel="stylesheet/less" scoped>
 .header {
