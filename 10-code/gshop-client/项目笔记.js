@@ -49,4 +49,36 @@
  * 字符串写法:$router.push('地址/参数')--->params的方式(需要占位)   $router.push('地址?参数')--->query的方式(不需要占位) 
  * 对象的写法:$router.push({name:'名字',params:{键:值}})--->params的方式(需要占位,设置name属性)   $router.push({path:'地址',query:{键:值}})--->query的方式(不需要占位) 
  * 
+ * 面试题:正向代理和反向代理的问题
+ * 
+ * 脚手架2和脚手架3的跨域配置
+ * 脚手架2的跨域可以在config目录中的index.js文件中: proxyTable: {},里面进行跨域的配置
+ * 脚手架3的跨域可以在vue.config.js文件中:devServer:{} 里面进行跨域的配置
+ * 
+ * 
+ * 脚手架2和脚手架3的eslint的设置
+ * 脚手架2中可以在.eslintignore文件或者在eslintrc.js中对eslint语法进行进行关闭操作
+ * 脚手架3中可以在package.json文件中的"rules": {}关闭相关的eslint语法检查 或者在vue.config.js文件中进行配置的方式关闭eslint语法检查
+ * 
+ * 面试题:你们的项目为什么要用vuex或者为什么不用vuex
+ * 答:看老大
+ * 涉及到的状态数据比较多,管理起来不是特别方便,而且多个组件之间要进行通信,所以,使用vuex可以解决这些问题
+ * 
+ * 
+ * Vuex中模块的操作,及模块的命名
+ * 为什么要有模块化的操作,如果不进行模块化的操作,最终state,mutations,actions,getters每个对象中会出现大量的代码,很雍容,管理起来(维护,升级,更新)不方便,所以要进行Vuex的模块化操作
+ * 模块如何命名?
+ * 可以根据功能来命名,也可以按照组件的使用来进行命名
+ * a组件用到了3个数据,第一个模块的名字就是a
+ * b组件用到了2个数据,第二个模块的名字就是b
+ * Vuex中的模块如何定义(文件),创建一个modules目录,中每个模块都是一个js文件,
+ * Vuex模块化后还有下面的这个问题
+ * 当前vuex中的index.js文件还在引入state,mutations,actions,getters,何用,作何解释?
+ * 每个模块中的state,mutations,actions,getters这些都是子的
+ * 在store目录中的index.js文件中引入的state,mutations,actions,getters,是总的
+ * 
+ * 
+ * 
+ * 
+ * 
  */
