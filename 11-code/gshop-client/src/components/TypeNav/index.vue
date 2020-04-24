@@ -92,8 +92,9 @@ export default {
   },
   // 页面加载后
   mounted() {
+    // 问题:首页,Search页面目前都发送了这个请求,没有必要,所以要进行优化请求次数
     // 提交对应的action,目的:为了获取三级分类信息数据
-    this.$store.dispatch('getBaseCategoryList')
+    // this.$store.dispatch('getBaseCategoryList')
     // 判断当前路径是不是/ ,决定是否显示
     if (this.$route.path !== '/') {
       this.isShowFirst = false

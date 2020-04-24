@@ -21,6 +21,8 @@ export default {
   },
   // 页面加载后的生命周期回调
   mounted () {
+    // 通过dispatch提交对应的action,获取分类信息数据(没有必要发多次请求)
+    this.$store.dispatch('getBaseCategoryList')
     // const result = await reqBaseCategoryList()
     // console.log(result)
     // 通过提交actions,使用vuex的方式来发送请求

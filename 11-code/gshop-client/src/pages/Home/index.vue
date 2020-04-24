@@ -15,7 +15,7 @@
     <!--楼层-->
     <Floor />
     <!--商标-->
-    <Brand/>
+    <Brand />
   </div>
 </template>
 <script>
@@ -36,7 +36,7 @@ import components from './homemModules'
 export default {
   name: 'Home',
   // 注册组件
-  components
+  components,
   // components: {
   //   ListContainer, // 列表组件
   //   TodayRecommend, // 今日推荐组件
@@ -45,6 +45,13 @@ export default {
   //   Floor, // 楼层组件
   //   Brand // 商标组件
   // }
+  // 页面加载后获取轮播图和楼层数据
+  mounted() {
+    // 获取大轮播图的数据
+    this.$store.dispatch('getBanners')
+    // 获取楼层的数据
+    this.$store.dispatch('getFloors')
+  }
 }
 </script>
 <style lang="less" rel="stylesheet/less" scoped>

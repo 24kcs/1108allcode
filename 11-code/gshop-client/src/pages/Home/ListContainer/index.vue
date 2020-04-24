@@ -3,20 +3,20 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
+              <img src="./images/banner1.jpg" alt="">
             </div>
             <!-- <div class="swiper-slide">
-                <img src="./images/banner2.jpg" />
-              </div>
-              <div class="swiper-slide">
-                <img src="./images/banner3.jpg" />
-              </div>
-              <div class="swiper-slide">
-                <img src="./images/banner4.jpg" />
-            </div>-->
+              <img src="./images/banner2.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/banner3.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/banner4.jpg" alt="">
+            </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -24,6 +24,9 @@
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
+
+          <!-- 如果需要滚动条 -->
+          <div class="swiper-scrollbar"></div>
         </div>
       </div>
       <div class="right">

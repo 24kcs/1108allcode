@@ -6,6 +6,9 @@ import App from './App.vue'
 import router from './router'
 // 引入vuex的store
 import store from './store'
+// 引入mock
+import './mock/mockServer'
+
 // 引入商品分类导航TypeNav组件
 import TypeNav from './components/TypeNav'
 // 设置浏览器的控制台中是否显示默认提示信息
