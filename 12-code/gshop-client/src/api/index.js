@@ -19,3 +19,7 @@ export const reqFloors = () => mockAjax.get('/floors')
 // reqFloors().then(result2=>{
 //   console.log(result2)
 // })
+
+// 获取搜索数据的接口
+export const reqProductList= (searchParams)=>ajax.post('/list',searchParams)
+// reqProductList({})
