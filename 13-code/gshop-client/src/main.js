@@ -20,8 +20,14 @@ Vue.config.productionTip = false
 // 注册全局组件(商品分类导航)
 Vue.component('TypeNav', TypeNav)
 Vue.component('Carousel', Carousel)
+
+// Vue.prototype.$bus = new Vue()  ----  // 创建Vue实例之前---数据初始化之前
 // 创建Vue实例,并挂载
 new Vue({
+  // 数据初始化之前---生命周期回调
+  beforeCreate () {
+    Vue.prototype.$bus =this
+  },
   render: h => h(App),
   // 注册路由器
   router,

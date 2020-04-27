@@ -78,7 +78,7 @@ export default {
       } else {
         // 再次判断
         if (path.indexOf('/search') === 0) {
-           this.$router.push({ name: 'search',query })
+          this.$router.push({ name: 'search', query })
         } else {
           // 没有参数但是也需要跳转
           this.$router.push({ name: 'search' })
@@ -122,6 +122,13 @@ export default {
       //   this.$router.push({ name: 'search'})
       // }
     }
+  },
+  // 页面加载后的生命周期回调
+  mounted() {
+    // 通过事件总线绑定事件,目的:干掉搜索框中的关键字
+    this.$bus.$on('removeKeyword', () => {
+      this.keyword = ''
+    })
   }
 }
 

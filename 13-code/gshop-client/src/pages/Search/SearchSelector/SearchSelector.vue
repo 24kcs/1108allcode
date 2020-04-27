@@ -4,7 +4,8 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <!--点击品牌的时候,需要传递品牌的id和品牌的名字-->
+          <li v-for="trademark in trademarkList" :key="trademark.tmId" @click="setTrademark(trademark.tmId,trademark.tmName)">{{trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -16,22 +17,25 @@
       <div class="fl key">{{attrs.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="val in attrs.attrValueList" :key="val">
+          <li v-for="val in attrs.attrValueList" :key="val" @click="addProps(attrs.attrId,val,attrs.attrName)">
             <a href="javascript:;">{{val}}</a>
           </li>
         </ul>
       </div>
       <div class="fl ext"></div>
     </div>
-
   </div>
 </template>
-
 <script>
 // 引入Vuex中的辅助函数
 import { mapGetters } from 'vuex'
 export default {
   name: 'SearchSelector',
+  // 通过props的方式接收父级组件传递过来的函数
+  props:{
+    setTrademark:Function,
+    addProps:Function
+  },
   computed: {
     ...mapGetters(['trademarkList', 'attrsList'])
   }
