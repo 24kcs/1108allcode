@@ -5,19 +5,21 @@
     <button :disabled="currentPage===1" @click="changeCurrentPage(currentPage-1)">上一页</button>
     <!-- 第1页 -->
     <button v-if="startEnd.start>1" @click="changeCurrentPage(1)">1</button>
-    <!-- 省略号 start>2才显示 -->
+    <!-- 第一个省略号 -->
     <button disabled v-if="startEnd.start>2">···</button>
     <!-- 连续页码 -->
+
+    <!-- <button class="active">5</button> -->
+    <!--遍历操作,连续页码  5个 ,当前是5   3,4,5,6,7-->
     <button
       v-for="no in startEnd.end"
-      :key="no"
       v-if="no>=startEnd.start"
-      :class="{active: currentPage===no}"
+      :key="no"
+      :class="{active:currentPage===no}"
       @click="changeCurrentPage(no)"
     >{{no}}</button>
-    <!-- 34567 -->
 
-    <!-- 省略号 end<totalPages-1  -->
+    <!--第二个 省略号 -->
     <button disabled v-if="startEnd.end<totalPages-1">···</button>
     <!-- 最后一页 -->
     <button v-if="startEnd.end<totalPages" @click="changeCurrentPage(totalPages)">{{totalPages}}</button>
@@ -31,195 +33,128 @@
 <script>
 export default {
   name: 'Pagination',
-
   props: {
-    // 分页数据的配置对象
+    // 关于其他组件需要传递过来的数据对象的配置
     pageConfig: {
-      type: Object,
+      type: Object, // 传递进来的数据的类型
       default: {
-        total: 0, // 总数据个数-----一共有35条数据
-        showPageNo: 5, // 连续显示的页码数(连续显示多少个页码的按钮个数)
-        pageNo: 1, // 当前页码-----默认显示的是哪一页的数据  第一页
-        pageSize: 10 // 每页的数据个数------每页显示几条数据
+        // 这里的数据的默认值的设置
+        total: 0, // 总条数
+        pageSize: 10, // 每页多少条数据
+        pageNo: 1, // 默认显示第几页的数据----默认的页码
+        showPageNo: 5 // 默认显示的连续页码数(几个页码按钮是连续显示的)
       }
     }
   },
-
   data() {
-    // 在data中可以读取props和Vue原型对象上的属性
-    // console.log('----', this.pageConfig, this.$bus)
-    // 在data()中不可以直接读取data对象中的数据
-    // console.log('++++', this.currentPage)
-
     return {
-      currentPage: this.pageConfig.pageNo // 当前页码
+      currentPage: this.pageConfig.pageNo // 当前页码数----直接从props中获取的
     }
   },
-
   computed: {
-    /* 
-      总页码数
-      */
+    // 1. 计算总的页码数
     totalPages() {
-      // 取出总数量和每页记录数     36 / 5  ==> 8页
+      // 获取总的数据条数和每页条数
       const { total, pageSize } = this.pageConfig
+      // 深入的判断处理,总条数和每页条数小于等于0的情况,没有必要计算了
       if (total <= 0 || pageSize <= 0) return 0
-
-      return Math.ceil(total / pageSize) // 需要向上取整
+      // 计算出总的页码数(向上取整)
+      return Math.ceil(total / pageSize)
     },
-
-    /* 
-      计算得到连续页码的start和end 
-          连续页码数: pageConfig.showPageNo   5
-          当前页码: currentPage    4       23456
-          总页码数: totalPages 10/5
-      */
+    // 计算连续页码数(连续页码的开始和连续页码的结束)
     startEnd() {
+      // 默认的开始页码和结束页码都是0
       let start = 0
       let end = 0
-
-      // 取出相关数据
-      // const { showPageNo } = this.pageConfig
-      // const {totalPages, currentPage} = this
-      const {
-        totalPages,
-        currentPage,
-        pageConfig: { showPageNo }
-      } = this // 多层级对象解构
-
-      // 计算后更新start和end
-      /* 
-        currentPage  showPageNo  totalPages
-          4             5             10     23456
-          2             5             10     123445
-          9             5             10     6789 10
-        */
-      // 计算start
-      start = currentPage - Math.floor(showPageNo / 2)
-      // 如果start页码小于1, 就为1
-      if (start < 1) {
-        start = 1
-      }
-
-      // 计算end
-      /* 
-        9             5             10     
-        start = 7  ===> 6
-        end =7 + 4 = 11  ==> end = 10
-
-        2             5               3
-        start = 1 
-        end = 3
-        start = -1 
-        */
-      end = start + showPageNo - 1
-      // 如果end大于了总页码数
-      if (end > totalPages) {
-        // end值为总页码数
-        end = totalPages
-        // 修正start: 让start到end为showPageNo
-        start = end - showPageNo + 1
-        // 如果start小于1, 指定为1
-        if (start < 1) {
-          start = 1
-        }
-      }
-      return { start, end }
-    },
-
-    /* 
-      要根据已有数据计算出连续页码的start和end
-      */
-    startEnd2() {
-      // 得到已有依赖数据
-      // 当前页码 / 连续数码数 / 总页码数
+      // 当前页码数, 连续页码数, 总的页码数
+      // 当前页码
       const currentPage = this.currentPage
+      // 连续页码
       const showPageNo = this.pageConfig.showPageNo
+      // 总的页码数
       const totalPages = this.totalPages
+      // const {currentPage,totalPages,pageConfig:{showPageNo}} = this
 
-      // 计算产生需要的数据
-      let start = 0
-      let end = 0
-      /* 
-        currentPage  showPageNo  totalPages
-          4             5             10     ==> start = 4 - 2
-        */
+      // 计算开始的页码start
+      //  9，10，11，12，13
       start = currentPage - Math.floor(showPageNo / 2)
-
-      /* 
-        currentPage  showPageNo  totalPages
-          2             5             10     ==> start = 2 - 2 不对  应该是1
-        */
+      // 连续页码是5  当前页码是2
+      // 1,2,3,4,5
+      // 0,1,2,3,4
+      // start = 2-2
+      // 修正开始页码的操作
       if (start < 1) {
         start = 1
       }
-
-      /* 
-        currentPage  showPageNo  totalPages
-          4             5             10     ==>   start + 5 -1
-       */
-      // end = currentPage + Math.floor(showPageNo/2)
-      // start=1 ==> 1 + 5 -1   5
-      // start=4 ===> 4 + 5 -1  8
+      // 计算结束的页码end
+      // 当前页码是11 ,12,13,连续页码是5
+      // end = currentPage + Math.floor(showPageNo / 2)
+      // 连续是5 , 开始1
       end = start + showPageNo - 1
-      /* 
-        currentPage  showPageNo  totalPages
-          9             5             10     ==> end = 11   9 + 2  超过了最大页码
-       */
+      // 一共就7页
+      // 当前页码6      连续的页码是:3,4,5,6,7
+      // 判断
       if (end > totalPages) {
-        end = totalPages // 如果end超过了最大页码, 修正为最大页码
-
-        /* 
-           currentPage  showPageNo  totalPages
-            9             5             10
-            start = 9 - 2  应该是6
-            end = 10
-          */
-        start = end - showPageNo + 1 // 10 - 5 + 1
-
-        // 如果start小于1, 指定为1
+        // 重新修正end
+        end = totalPages
+        // 重新修正start
+        // 1,2,3,4 总的页数：4
+        start = end - showPageNo + 1
         if (start < 1) {
           start = 1
         }
       }
-
-      // 返回数据
       return { start, end }
+      // 一个方法需要多个返回值,一般可以使用数组方式来存储数据并返回,也可以使用对象的方式并返回
+      // return [start,end]
     }
   },
-
   watch: {
-    /*
-      当接收的pageConfig中的pageNo发生改变调用 
-       */
-    'pageConfig.pageNo'(value) {
-      // 将当前页码指定为外部传入的值
-      this.currentPage = value
+    // 错误写法
+    // pageConfig.pageNo(){
+    // 特殊写法,之所以加了单引号,因为内部是对象.属性的方式
+    'pageConfig.pageNo'(val) {
+      this.currentPage = val
     }
   },
-
+  // {
+  //   '属性':值
+  // }
+  // var obj={
+  //   name:'小明'
+  // }
+  // obj['name']='小白'
   methods: {
-    /* 
-      将当前页码改为指定页码
-      */
+    // 点击按钮,修改当前页码
     changeCurrentPage(page) {
-      // 修改当前页码
+      // 修改当前的选中页码
       this.currentPage = page
-      // 通知外部父组件
+      // 通知外部父级组件
       this.$emit('changeCurrentPage', page)
     }
   }
 
-  // beforeCreate() {
-  //   // beforeCreate()在data()之前执行
-  //   // console.log('beforeCreate()', this.currentPage) // undefined
+  // data() {
+  //   // 当前组件初始化的时候,或者当前组件在创建的时候,data对象内部能不能使用props对象中的数据(完全可以使用)
+  //   // 在data中是否可以读取props中的数据(是可以的),包括Vue原型对象上的属性 (是可以的)
+  //   // console.log(this.pageConfig)
+  //   // console.log(this.$bus)
+  //   // 在data中可不可以直接读取data对象中的数据(不可以的)
+  //   // console.log(this.currentPage)
+  //   return {
+  //     // currentPage: 0 // 当前页码
+  //     currentPage: this.pageConfig.pageNo // 当前页码数----直接从props中获取的
+  //   }
+  // }
+  // beforeCreate () { // 初始化之前
+  //    console.log(this.currentPage)
   // },
-  // created() {
-  //   // created()在data()之后执行
-  //   // console.log('created()', this.currentPage) // 有值
+  // created () { // 初始化之后
+  //    console.log(this.currentPage)
   // }
 }
 </script>
+
 <style lang="less" scoped>
 .pagination {
   button {
@@ -251,5 +186,3 @@ export default {
   }
 }
 </style>
-
-

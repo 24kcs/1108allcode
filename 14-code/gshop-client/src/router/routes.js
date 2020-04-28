@@ -9,6 +9,8 @@ import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 // 引入Search组件
 import Search from '@/pages/Search'
+// 引入Detail组件
+import Detail from '@/pages/Detail'
 export default [
   // 首页路由组件
   {
@@ -37,6 +39,12 @@ export default [
     name: 'search', // 命名路由
     path: '/search/:keyword?', // params参数可传可不传
     component: Search
+  },
+  {
+    // 路由传参
+    name: 'detail', // 命名路由
+    path: '/detail/:skuId', 
+    component: Detail
   },
   // 重定向
   {

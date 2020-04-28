@@ -65,21 +65,26 @@
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
+              <li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="javascript:;">
-                      <img :src="good.defaultImg" />
-                    </a>
+                    <!-- <a href="javascript:;">
+                      <img :src="goods.defaultImg" />
+                    </a>-->
+                    <!-- <router-link :to="{name:'detail',params:{skuId:goods.id}}"> -->
+                    <router-link :to="`/detail/${goods.id}`">
+                      <img :src="goods.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{good.price}}</i>
+                      <i>{{goods.price}}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a href="javascript:;" :title="good.title">{{good.title}}</a>
+                    <!-- <a href="javascript:;" :title="goods.title">{{goods.title}}</a> -->
+                    <router-link :to="`/detail/${goods.id}`">{{goods.title}}</router-link>
                   </div>
                   <div class="commit">
                     <i class="command">
@@ -100,9 +105,13 @@
 
           <!-- <Pagination :pageConfig="{total:goodsList.length,showPageNo:3,pageNo:options.pageNo,pageSize:options.pageSize}" /> -->
           <!--所有商品数据的总条数:productList.total-->
-          <Pagination
+          <!-- <Pagination
             :pageConfig="{total:productList.total,showPageNo:3,pageNo:options.pageNo,pageSize:options.pageSize}"
             @changeCurrentPage="changeCurrentPage"
+          />-->
+          <Pagination
+            :pageConfig="{total:productList.total,showPageNo:3,pageNo:options.pageNo,pageSize:options.pageSize}"
+            @changeCurrentPage="getProductList"
           />
 
           <!-- <div class="fr page">
@@ -177,7 +186,9 @@ export default {
   // 写方法的对象
   methods: {
     // 根据参数发送请求,获取数据的
-    getProductList() {
+    getProductList(pageNo = 1) {
+      // 发送请求的时候,需要携带的页码数
+      this.options.pageNo = pageNo
       this.$store.dispatch('getProductList', this.options) // 发送请求
     },
     // 重置分类信息
@@ -288,15 +299,15 @@ export default {
       } else {
         return ''
       }
-    },
-    // 绑定事件,改变当前页面,发送请求获取该页数的数
-    changeCurrentPage(page){
-      // 改变发送请求的时候传入的参数数据
-      // page是第几页,那么我就发送请求获取第几页的数据
-      // 如: page--->5  那现在就看第5也的数据
-      this.options.pageNo=page
-      this.getProductList() // 发送请求
     }
+    // 绑定事件,改变当前页面,发送请求获取该页数的数
+    // changeCurrentPage(page){
+    //   // 改变发送请求的时候传入的参数数据
+    //   // page是第几页,那么我就发送请求获取第几页的数据
+    //   // 如: page--->5  那现在就看第5也的数据
+    //   //this.options.pageNo=page
+    //   this.getProductList() // 发送请求
+    // }
   },
   watch: {
     $route(to, from) {
