@@ -303,6 +303,42 @@
        *     9，10，11，12，13
        * 
        * 
+       *  在Detail组件点击添加购物车按钮的时候出现的
+       *  // 如何根据提交的异步action的成功或者失败做不同的处理?
+       * 两种方式:
+       * 方式1:
+       *   使用callback回调处理
+       *     在组件内部,分发异步action的时候,使用dispatch()方法的时候,传入一个回调函数callback
+       *     在异步action中,在请求处理成功或者失败的时候,调用这个回调函数callback,如果成功就向callback中传入空字符串,失败就传入错误的信息
+       *     在callback回调函数内部,判断传入的是空串还是错误信息,根据空串或者错误信息来进行跳转处理
+       * 方式2:
+       *   使用async函数处理
+       *   前提:async函数执行的返回值是一个promise对象
+       *   promise成功的value: 函数执行时候没有错误,那么return 的就是value(不能是失败的promise)
+       *   promise失败的reason:函数执行的时候出错或者抛出错误或者返回一个失败的promise
+       *  this.$store.dispatch()的返回值就是action函数的返回值
+       * 
+       *   在组件中,普通的方式分发action, this.$store.dispatch('action的名字',参数)
+       *   在异步action中,请求处理成功或者失败后,返回相关的错误消息(errorMsg(可能没有值(空串),可能有值(错误消息)))
+       *    return result.code===200?'':(result.message||'添加购物车失败')
+       *   在组件中,通过await得到当前的action返回的错误消息(可能是空串,也可能是有值错误消息),根据判断来处理对应的问题
+       * 
+       * 
+       * sessionStorage或者localStorage 区别:
+       * 相同点:
+       * 都是在浏览器端进行存储
+       * 语法相同: setItem(key)/getItem(key)/removeItem(key)
+       * 不同点:
+       * sessionStorage
+       *  存储在浏览器运行的内存中---->浏览器关了,数据被清除了,重新打开浏览器也不会找到的
+       *  速度是很快的
+       * localStorage
+       *  存储在浏览器的本地的文件中(硬盘)---->浏览器关闭,又打开了,数据还可以获取到
+       *  速度相对于上面的方式而言,稍微慢一点
+       * 
+       * 文件:精华面试题宝典.txt(word文档)---总结起来---面试精讲(问题)
+       *   
+       * 
        * 
        * 
        * 

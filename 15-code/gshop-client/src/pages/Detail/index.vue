@@ -16,11 +16,11 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom 
-          v-if="skuImageList.length>0"
-          :imgUrl="skuImageList[currentImageIndex].imgUrl"
-          :bigImgUrl="skuImageList[currentImageIndex].imgUrl"
-           />
+          <Zoom
+            v-if="skuImageList.length>0"
+            :imgUrl="skuImageList[currentImageIndex].imgUrl"
+            :bigImgUrl="skuImageList[currentImageIndex].imgUrl"
+          />
           <!-- 小图列表 -->
           <ImageList @changeCurrentIndex="changeCurrentIndex" />
         </div>
@@ -81,12 +81,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:''">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addToCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -337,7 +337,8 @@ export default {
   },
   data() {
     return {
-      currentImageIndex: 0 // 当前图片的下标
+      currentImageIndex: 0, // 当前图片的下标
+      skuNum: 1 // 商品的数量
     }
   },
   // 页面加载的生命周期回调
@@ -348,7 +349,12 @@ export default {
     this.$store.dispatch('getDetailInfo', skuId)
   },
   computed: {
-    ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList','skuImageList'])
+    ...mapGetters([
+      'categoryView',
+      'skuInfo',
+      'spuSaleAttrList',
+      'skuImageList'
+    ])
   },
   methods: {
     // 点击某个选项,高亮显示操作
@@ -366,6 +372,57 @@ export default {
     changeCurrentIndex(index) {
       this.currentImageIndex = index
     },
+
+    // 点击按钮实现添加购物车跳转
+    async addToCart() {
+      const query = { skuId: this.skuInfo.id, skuNum: this.skuNum }
+      // 分发异步action,并接收分发的action的返回值
+      const errorMsg = await this.$store.dispatch('addToCart', query)
+      if (!errorMsg) {
+        // 成功的情况,把添加购物车界面中需要的大量的商品信息保存起来---缓存起来:sessionStorage或者localStorage
+        window.sessionStorage.setItem('SKU_INFO',JSON.stringify(this.skuInfo))
+        // 跳转到添加购物车的组件界面
+        this.$router.push({ path: '/addcartsuccess', query })
+      } else {
+        // 此时如果有错误信息,那么就说明失败的情况,如果失败了,就显示错误信息
+        alert(errorMsg)
+      }
+      // this.callback(errorMsg)
+    },
+    // callback(errorMsg) {
+    //   // 当该回调函数调用的时候,没有错误信息
+    //   const query = { skuId: this.skuInfo.id, skuNum: this.skuNum }
+    //   if (!errorMsg) {
+    //     // 成功的情况,就跳转
+    //     // 跳转到添加购物车的组件界面
+    //     this.$router.push({ path: '/addcartsuccess', query })
+    //   } else {
+    //     // 此时如果有错误信息,那么就说明失败的情况,如果失败了,就显示错误信息
+    //     alert(errorMsg)
+    //   }
+    // },
+
+    // 方式1：分发异步action的时候出现成功或者失败的处理操作,使用的是callback的方式
+    // // 点击按钮实现添加购物车跳转
+    // addToCart() {
+    //   const query = { skuId: this.skuInfo.id, skuNum: this.skuNum }
+    //   // 分发异步action
+    //   this.$store.dispatch('addToCart', { ...query, callback: this.callback })
+    //   // 如何根据提交的异步action的成功或者失败做不同的处理?
+    // },
+    // callback(errorMsg) {
+    //   // 当该回调函数调用的时候,没有错误信息
+    //   const query = { skuId: this.skuInfo.id, skuNum: this.skuNum }
+    //   if (!errorMsg) {
+    //     // 成功的情况,就跳转
+    //     // 跳转到添加购物车的组件界面
+    //     this.$router.push({ path: '/addcartsuccess', query })
+    //   } else {
+    //     // 此时如果有错误信息,那么就说明失败的情况,如果失败了,就显示错误信息
+    //     alert(errorMsg)
+    //   }
+    // },
+
     // 临时设置的页面中的'色' 的bug解决
     getTxt(attr) {
       return attr.saleAttrName === '选择颜色' ? '色' : ''

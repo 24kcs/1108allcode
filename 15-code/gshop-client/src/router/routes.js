@@ -11,6 +11,10 @@ import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 // 引入Detail组件
 import Detail from '@/pages/Detail'
+// 引入AddCartSuccess组件
+import AddCartSuccess from '@/pages/AddCartSuccess'
+// 引入购物车组件
+import ShopCart from '@/pages/ShopCart'
 export default [
   // 首页路由组件
   {
@@ -40,11 +44,21 @@ export default [
     path: '/search/:keyword?', // params参数可传可不传
     component: Search
   },
+  // 详情路由组件
   {
-    // 路由传参
     name: 'detail', // 命名路由
     path: '/detail/:skuId', 
     component: Detail
+  },
+  // 添加成功的购物车路由组件
+  {
+    path: '/addcartsuccess', 
+    component: AddCartSuccess
+  },
+  // 购物车路由组件
+  {
+    path: '/shopcart', 
+    component: ShopCart
   },
   // 重定向
   {

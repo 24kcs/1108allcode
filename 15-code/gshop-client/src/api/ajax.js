@@ -4,6 +4,7 @@ import axios from 'axios'
 // 引入nprogress插件包及样式
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import store from '@/store'
 // 1. 配置一个通用的基础路径和请求超时时间
 const ajax = axios.create({
   // 注意大小写
@@ -14,6 +15,8 @@ const ajax = axios.create({
 ajax.interceptors.request.use(config => {
   // 2.请求的时候显示进度条
   Nprogress.start() // 此时是显示进度条(响应成功了或者失败的时候需要隐藏进度条)
+  // 5.所有的请求头都需要携带userTempId 
+  config.headers['userTempId']=  store.state.user.userTempId // 用户临时id凭证 --->vuex--->store.state.user.userTempId
   return config
 })
 // 响应拦截器
