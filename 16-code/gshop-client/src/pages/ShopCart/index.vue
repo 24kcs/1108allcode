@@ -33,9 +33,16 @@
             <span class="price">{{item.skuPrice}}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" minnum="1" class="itxt" v-model="item.skuNum" />
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a href="javascript:void(0)" class="mins" @click="changeItemCount(item,-1)">-</a>
+            <input
+              autocomplete="off"
+              type="text"
+              minnum="1"
+              class="itxt"
+              :value="item.skuNum"
+              @change="changeItemCount(item,$event.target.value*1-item.skuNum)"
+            />
+            <a href="javascript:void(0)" class="plus" @click="changeItemCount(item,1)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{item.skuPrice*item.skuNum}}</span>
@@ -50,7 +57,7 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" v-model="isAllCheck" />
+        <input class="chooseAll" type="checkbox" :checked="isAllCheck" @change="checkAll" />
         <span>全选</span>
       </div>
       <div class="option">
@@ -158,12 +165,6 @@ export default {
       // 先获取当前这个购物项的选中状态
       const isChecked = item.isChecked === 1 ? 0 : 1
       const { skuId } = item
-
-
-      // 分发action,修改勾选状态-------------
-      // ------------------------------,vuex中的action还没写呢,下午写
-
-      
       this.$store.dispatch('checkCartItem', { skuId, isChecked }).then(
         () => {
           // 修改选中状态成功,重新获取购物车商品列表数据
@@ -174,6 +175,73 @@ export default {
           alert(error.message)
         }
       )
+    },
+    // 改变所有购物项的选中状态
+    async checkAll(event) {
+      // console.log(event.target.checked)
+      // 获取当前的这个复选框的选中状态(该选中状态是布尔类型,而我们需要的是数字类型的值:1/0)
+      const isChecked = event.target.checked * 1
+      // const promises = []
+      // // 遍历当前所有的购物项,分发action,并传入skuId和isChecked
+      // this.shopCartList.forEach(item => {
+      //   // 遍历一个数据,那么就分发一次action
+      //   const promise = this.$store.dispatch('checkCartItem', {
+      //     skuId: item.skuId,
+      //     isChecked
+      //   })
+      //   promises.push(promise)
+      // })
+      // 数组的reduce方法的方式
+      // const promises = this.shopCartList.reduce((pre, item) => {
+      //   const promise = this.$store.dispatch('checkCartItem', {
+      //     skuId: item.skuId,
+      //     isChecked
+      //   })
+      //   pre.push(promise)
+      //   return pre
+      // }, [])
+      // 数组的map方法的方式
+      const promises = this.shopCartList.map(item => {
+        return this.$store.dispatch('checkCartItem', {
+          skuId: item.skuId,
+          isChecked
+        })
+      })
+      try {
+        await Promise.all(promises)
+        this.getShopCartList() // 重新发送请求获取购物车的数据
+      } catch (error) {
+        alert(error.message)
+      }
+    },
+    // 修改购物项的数量方法
+    // async changeItemCount(item, changeNum) {
+    //   // 要调用接口,所以,要准备参数
+    //   const { skuId } = item
+    //   // 最好要判断修改后最终的数据一定要大于0
+    //   if (item.skuNum + changeNum > 0) {
+    //     // 分发action
+    //     const errorMsg = await this.$store.dispatch('addToCart2', {
+    //       skuId,
+    //       skuNum: changeNum
+    //     })
+    //     if (!errorMsg) {
+    //       // 修改数量已经成功,重新获取购物车中的数据列表了
+    //       this.getShopCartList()
+    //     } else {
+    //       alert(errorMsg)
+    //     }
+    //   }
+    // },
+    //  修改购物项的数量方法
+    changeItemCount(item, changeNum) {
+      // 要调用接口,所以,要准备参数
+      const { skuId } = item
+      // 最好要判断修改后最终的数据一定要大于0
+      if (item.skuNum + changeNum > 0) {
+        // 分发action
+        this.$store.dispatch('addToCart3', {skuId,skuNum: changeNum})
+      }
     },
 
     // 封装一个方法,用来分发异步的action,获取购物车商品列表数据

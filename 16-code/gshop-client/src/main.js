@@ -17,6 +17,8 @@ import TypeNav from './components/TypeNav'
 import Carousel from './components/Carousel'
 // 引入分页组件
 import Pagination from './components/Pagination'
+// 引入vue表单验证的插件
+import './validate'
 // 设置浏览器的控制台中是否显示默认提示信息
 Vue.config.productionTip = false
 // 注册全局组件(商品分类导航)

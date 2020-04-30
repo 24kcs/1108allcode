@@ -30,6 +30,18 @@ const actions = {
     const result = await reqAddToCart(skuId, skuNum)
     return result.code === 200 ? '' : (result.message || '添加购物车失败')
   },
+
+  // 添加购物车的操作,使用async配合await
+  async addToCart3 ({ commit,dispatch }, { skuId, skuNum }) {
+    const result = await reqAddToCart(skuId, skuNum)
+    if (result.code === 200) {
+      // 如果可以这么做
+      dispatch('getShopCartList')
+    } else {
+      alert(result.message || '数量修改失败')
+      // return result.message||'数量修改失败'
+    }
+  },
   // 获取购物车商品数据列表
   async getShopCartList ({ commit }) {
     const result = await reqCartList()
@@ -45,12 +57,20 @@ const actions = {
   },
   async deleteCartItem2 ({ commit }, skuId) {
     const result = await reqDeleteCartItem(skuId)
-    if(result.code!==200){
+    if (result.code !== 200) {
       // 删除失败了,抛出一个error,error包括要显示的提示文本
       throw new Error('删除购物项失败')
       // 或者
       // return Promise.reject(new Error('删除购物项失败'))
       // return new Error('删除失败') // 不行的
+    }
+  },
+  // 切换当前购物项的选中状态的
+  async checkCartItem ({ commit }, { skuId, isChecked }) {
+    const result = await reqCheckCartItem(skuId, isChecked)
+    // 处理失败的情况
+    if (result.code !== 200) {
+      throw new Error('切换购物项选中状态失败')
     }
   }
 }
@@ -77,7 +97,7 @@ const getters = {
   },
   // 计算商品是否全选
   isAllCheck (state) {
-    return state.shopCartList.length>0 && state.shopCartList.every((item, index) => item.isChecked === 1)
+    return state.shopCartList.length > 0 && state.shopCartList.every((item, index) => item.isChecked === 1)
   },
   // 计算购物车中所有选中的购物项,产生一个数组
   selectedCartItems (state) {
