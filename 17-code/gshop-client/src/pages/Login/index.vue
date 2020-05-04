@@ -68,6 +68,8 @@
   </div>
 </template>
 <script>
+// 引入store
+import store from '../../store'
 export default {
   name: 'Login',
   data() {
@@ -83,19 +85,41 @@ export default {
       const { mobile, password } = this
       if (mobile !== '' && password !== '') {
         // 分发action
-        this.$store.dispatch('login', { mobile, password })
-        .then(()=>{
-          // 成功了,就要进行跳转,默认跳转到首页
-          this.$router.replace('/')
-
-        })
-        .catch(error=>{
-          alert(error)
-        })
-      }else{
+        this.$store
+          .dispatch('login', { mobile, password })
+          .then(() => {
+            // 成功了,就要进行跳转,默认跳转到首页
+            const {redirect} = this.$route.query
+            
+            this.$router.replace(redirect|| '/')
+          })
+          .catch(error => {
+            alert(error)
+          })
+      } else {
         alert('手机号或者密码是不能为空的')
       }
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不！能！获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+    // if (store.state.user.userInfo.name) {
+    //   next('/')
+    // }else{
+    //   next()
+    // }
+    next(vm => {
+      // 判断用户是否已经登录
+      if (vm.$store.state.user.userInfo.name) {
+        // 如果已经登录了,再想访问/login,那么就跳转到首页
+        next('/')
+      } else {
+        // 没有登录则继续的放行
+        next()
+      }
+    })
   }
 }
 </script>

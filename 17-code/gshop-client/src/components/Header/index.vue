@@ -139,6 +139,8 @@ export default {
       if(window.confirm('确定退出吗')){
         try {
           await this.$store.dispatch('logout')
+          // 已经退出成功了,自动的跳转到首页
+          this.$router.replace('/')
         } catch (error) {
           alert(error.message)
         }
