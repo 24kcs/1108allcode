@@ -11,8 +11,7 @@
     <div class="content">
       <label>手机号:</label>
       <input type="text" placeholder="请输入你的手机号" v-model="mobile" v-validate="'required'" name="mobile" />
-      <span v-show="errors.has('mobile')" class="help is-danger"></span>
-      
+      <span style="color:red" v-show="errors.has('mobile')" >{{errors.first('mobile')}}</span>
     </div>
     <div class="content">
       <label>验证码:</label>
