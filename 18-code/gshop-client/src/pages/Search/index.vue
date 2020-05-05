@@ -73,7 +73,8 @@
                     </a>-->
                     <!-- <router-link :to="{name:'detail',params:{skuId:goods.id}}"> -->
                     <router-link :to="`/detail/${goods.id}`">
-                      <img :src="goods.defaultImg" />
+                      <!-- <img :src="goods.defaultImg" /> -->
+                      <img v-lazy="goods.defaultImg" />
                     </router-link>
                   </div>
                   <div class="price">
@@ -176,7 +177,7 @@ export default {
         // trademark: '', // 品牌      值:  "品牌id:品牌名字"--->"4:小米"
         order: '1:desc', // 排序方式  值: "1:desc" 1--综合,2--价格, asc--升序 desc--降序
         pageNo: 1, // 当前第几页   数字值
-        pageSize: 5, // 每页多少条数据  数字值
+        pageSize: 10, // 每页多少条数据  数字值
         keyword: '', // 搜索关键字    在搜索框中输入的内容
         props: [] // 多个属性条件组成的数组, ["属性id:属性值:属性名字"]  "1:1700-2799:价格",
       }

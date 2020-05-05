@@ -88,7 +88,7 @@ export default [
       const skuInfo = JSON.parse(window.sessionStorage.getItem('SKU_INFO'))
       // 获取query参数中的skuId和skuNum
       const { skuId, skuNum } = to.query
-      console.log(to)
+      // console.log(to)
       if (skuId && skuNum && skuInfo) {
         next() // 放行
       } else {
@@ -123,6 +123,8 @@ export default [
   {
     path: '/pay',
     component: Pay,
+    // 将query参数映射成为路由组件的props的方式来获取orderId的值
+    props: route => ({ orderId: route.query.orderId }),
     // 5. 只能从交易界面跳转到支付界面(pay)
     beforeEnter: (to, from, next) => {
       // 判断是从哪个路径跳转到的pay

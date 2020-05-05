@@ -22,6 +22,18 @@ import './validate'
 
 // 引入接口函数
 import * as API from './api'
+
+// 引入elements
+import './elements'
+// 引入图片懒加载的插件包
+import VueLazyload from 'vue-lazyload'
+// 引入图片懒加载要使用的图片
+import loading from './assets/images/loading.gif'
+// 声明使用该插件
+Vue.use(VueLazyload, {
+  loading
+})
+
 // 保证的任意的一个组件实例都可以直接访问相关的接口函数
 Vue.prototype.$API=API
 

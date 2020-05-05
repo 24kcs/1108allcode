@@ -7,18 +7,31 @@
           <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fl">
+            请您在提交订单
+            <em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：
+            <em>145687</em>
+          </span>
+          <span class="fr">
+            <em class="lead">应付金额：</em>
+            <em class="orange money">￥{{payInfo.totalFee}}</em>
+          </span>
         </div>
       </div>
       <div class="checkout-info">
         <h4>重要说明：</h4>
         <ol>
-          <li>尚品汇商城支付平台目前支持<span class="zfb">支付宝</span>支付方式。</li>
+          <li>
+            尚品汇商城支付平台目前支持
+            <span class="zfb">支付宝</span>支付方式。
+          </li>
           <li>其它支付渠道正在调试中，敬请期待。</li>
           <li>为了保证您的购物支付流程顺利完成，请保存以下支付宝信息。</li>
         </ol>
-        <h4>支付宝账户信息：（很重要，<span class="save">请保存！！！</span>）</h4>
+        <h4>
+          支付宝账户信息：（很重要，
+          <span class="save">请保存！！！</span>）
+        </h4>
         <ul>
           <li>支付帐号：11111111</li>
           <li>密码：111111</li>
@@ -31,10 +44,13 @@
         </div>
         <div class="step-cont">
           <ul class="payType">
-            <li><img src="./images/pay2.jpg"></li>
-            <li><img src="./images/pay3.jpg"></li>
+            <li>
+              <img src="./images/pay2.jpg" />
+            </li>
+            <li>
+              <img src="./images/pay3.jpg" />
+            </li>
           </ul>
-
         </div>
         <div class="hr"></div>
 
@@ -44,35 +60,62 @@
           </div>
           <div class="step-cont">
             <ul class="payType">
-              <li><img src="./images/pay10.jpg"></li>
-              <li><img src="./images/pay11.jpg"></li>
-              <li><img src="./images/pay12.jpg"></li>
-              <li><img src="./images/pay13.jpg"></li>
-              <li><img src="./images/pay14.jpg"></li>
-              <li><img src="./images/pay15.jpg"></li>
-              <li><img src="./images/pay16.jpg"></li>
-              <li><img src="./images/pay17.jpg"></li>
-              <li><img src="./images/pay18.jpg"></li>
-              <li><img src="./images/pay19.jpg"></li>
-              <li><img src="./images/pay20.jpg"></li>
-              <li><img src="./images/pay21.jpg"></li>
-              <li><img src="./images/pay22.jpg"></li>
-
+              <li>
+                <img src="./images/pay10.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay11.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay12.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay13.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay14.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay15.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay16.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay17.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay18.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay19.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay20.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay21.jpg" />
+              </li>
+              <li>
+                <img src="./images/pay22.jpg" />
+              </li>
             </ul>
           </div>
-
         </div>
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <!-- <router-link class="btn" to="/paysuccess">立即支付</router-link> -->
+          <a href="javascript:;" class="btn" @click="pay">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
             <h5>其他支付方式</h5>
           </div>
           <div class="step-cont">
-            <span><a href="weixinpay.html" target="_blank">微信支付</a></span>
+            <span>
+              <a href="weixinpay.html" target="_blank">微信支付</a>
+            </span>
             <span>中国银联</span>
           </div>
         </div>
@@ -82,159 +125,240 @@
 </template>
 
 <script>
-  export default {
-    name: 'Pay',
+// 引入vuex的辅助函数
+import { mapState } from 'vuex'
+// 引入qrcode插件
+import QRCode from 'qrcode'
+export default {
+  name: 'Pay',
+  props: ['orderId'],
+  computed: {
+    ...mapState({
+      payInfo: state => state.order.payInfo
+    })
+  },
+  // 界面加载完毕的生命周期的回调函数
+  mounted() {
+    // const {orderId}= this.$route.query
+    // 能够将query参数映射成为路由组件的props的方式来获取orderId的值
+    // 当界面加载后立刻分发action,发送异步请求,获取支付信息对象
+    this.$store.dispatch('getPayInfo', this.orderId)
+    // console.log(this.orderId)
+  },
+  methods: {
+    // 支付的回调
+    pay() {
+      // 立即支付
+
+      QRCode.toDataURL(this.payInfo.codeUrl)
+        .then(imgUrl => {
+          // 二维码生成成功了,获取到了base64的图片字符串---最终应该使用img标签包裹起来,然后才能显示出来
+          // console.log(imgUrl)
+          this.$alert(`<img src="${imgUrl}" />`, '请使用微信扫码支付', {
+            dangerouslyUseHTMLString: true, // 解析html标签内容
+            showCancelButton: true, // 显示取消按钮
+            cancelButtonText: '支付中遇到的问题', // 在取消按钮中显示提示信息
+            confirmButtonText: '我已成功支付', // 确定按钮中的提示信息
+            center: true, // 是否居中显示
+            showClose: false // 是否显示右上角的关闭的x
+          })
+            .then(() => {
+              // 点了已支付
+              // 清除定时器
+              clearInterval(this.timeId)
+              // 关闭二维码
+              this.$msgbox.close()
+              // 进行跳转
+              this.$router.push('/paysuccess')
+            })
+            .catch(() => {
+              // 点了取消
+              // 清除定时器
+              clearInterval(this.timeId)
+              this.$message.warning('请联系硅谷漂亮前台妹妹')
+            })
+          // 获取支付的订单状态
+
+          this.timeId = setInterval(() => {
+            // 调用接口
+            this.$API
+              .reqOrderStatus(this.orderId)
+              .then(result => {
+                if (result.code === 200) {
+                  // 清除定时器
+                  clearInterval(this.timeId)
+                  // 关闭二维码
+                  this.$msgbox.close()
+                  // 跳转界面
+                  this.$router.push('/paysuccess')
+                  // 成功的提示信息
+                  this.$message.success('支付成功')
+                }
+              })
+              .catch(error => {
+                // 清除定时器
+                clearInterval(this.timeId)
+                // 失败的提示信息
+                this.$message.error('获取订单失败')
+              })
+          }, 3000)
+        })
+        .catch(error => {
+          this.$message.error('支付二维码生成失败')
+        })
+    }
   }
+}
 </script>
 
 <style lang="less" scoped>
-  .pay-main {
-    margin-bottom: 20px;
+.pay-main {
+  margin-bottom: 20px;
 
-    .pay-container {
-      margin: 0 auto;
-      width: 1200px;
+  .pay-container {
+    margin: 0 auto;
+    width: 1200px;
 
-      a:hover {
-        color: #4cb9fc;
-      }
+    a:hover {
+      color: #4cb9fc;
+    }
 
-      .orange {
-        color: #e1251b;
-      }
+    .orange {
+      color: #e1251b;
+    }
 
-      .money {
-        font-size: 18px;
-      }
+    .money {
+      font-size: 18px;
+    }
 
-      .zfb {
-        color: #e1251b;
-        font-weight: 700;
-      }
+    .zfb {
+      color: #e1251b;
+      font-weight: 700;
+    }
 
-      .checkout-tit {
-        padding: 10px;
+    .checkout-tit {
+      padding: 10px;
 
-        .tit-txt {
-          font-size: 14px;
-          line-height: 21px;
+      .tit-txt {
+        font-size: 14px;
+        line-height: 21px;
 
-          .success-icon {
-            width: 30px;
-            height: 30px;
-            display: inline-block;
-            background: url(./images/icon.png) no-repeat 0 0;
-          }
-
-          .success-info {
-            padding: 0 8px;
-            line-height: 30px;
-            vertical-align: top;
-          }
-        }
-
-        .paymark {
-          overflow: hidden;
-          line-height: 26px;
-          text-indent: 38px;
-
-          .fl {
-            float: left;
-          }
-
-          .fr {
-            float: right;
-
-            .lead {
-              margin-bottom: 18px;
-              font-size: 15px;
-              font-weight: 400;
-              line-height: 22.5px;
-            }
-          }
-        }
-      }
-
-      .checkout-info {
-        padding-left: 25px;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
-        border: 2px solid #e1251b;
-
-        h4 {
-          margin: 9px 0;
-          font-size: 14px;
-          line-height: 21px;
-          color: #e1251b;
-        }
-
-        ol {
-          padding-left: 25px;
-          list-style-type: decimal;
-          line-height: 24px;
-          font-size: 14px;
-        }
-
-        ul {
-          padding-left: 25px;
-          list-style-type: disc;
-          line-height: 24px;
-          font-size: 14px;
-        }
-      }
-
-      .checkout-steps {
-        border: 1px solid #ddd;
-        padding: 25px;
-
-        .hr {
-          height: 1px;
-          background-color: #ddd;
-        }
-
-        .step-tit {
-          line-height: 36px;
-          margin: 15px 0;
-        }
-
-        .step-cont {
-          margin: 0 10px 12px 20px;
-
-          ul {
-            font-size: 0;
-
-            li {
-              margin: 2px;
-              display: inline-block;
-              padding: 5px 20px;
-              border: 1px solid #ddd;
-              cursor: pointer;
-              line-height: 18px;
-            }
-          }
-        }
-      }
-
-      .submit {
-        text-align: center;
-
-        .btn {
+        .success-icon {
+          width: 30px;
+          height: 30px;
           display: inline-block;
-          padding: 15px 45px;
-          margin: 15px 0 10px;
-          font: 18px "微软雅黑";
-          font-weight: 700;
-          border-radius: 0;
-          background-color: #e1251b;
-          border: 1px solid #e1251b;
-          color: #fff;
-          text-align: center;
-          vertical-align: middle;
-          cursor: pointer;
-          user-select: none;
-          text-decoration: none;
+          background: url(./images/icon.png) no-repeat 0 0;
+        }
+
+        .success-info {
+          padding: 0 8px;
+          line-height: 30px;
+          vertical-align: top;
+        }
+      }
+
+      .paymark {
+        overflow: hidden;
+        line-height: 26px;
+        text-indent: 38px;
+
+        .fl {
+          float: left;
+        }
+
+        .fr {
+          float: right;
+
+          .lead {
+            margin-bottom: 18px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22.5px;
+          }
         }
       }
     }
+
+    .checkout-info {
+      padding-left: 25px;
+      padding-bottom: 15px;
+      margin-bottom: 10px;
+      border: 2px solid #e1251b;
+
+      h4 {
+        margin: 9px 0;
+        font-size: 14px;
+        line-height: 21px;
+        color: #e1251b;
+      }
+
+      ol {
+        padding-left: 25px;
+        list-style-type: decimal;
+        line-height: 24px;
+        font-size: 14px;
+      }
+
+      ul {
+        padding-left: 25px;
+        list-style-type: disc;
+        line-height: 24px;
+        font-size: 14px;
+      }
+    }
+
+    .checkout-steps {
+      border: 1px solid #ddd;
+      padding: 25px;
+
+      .hr {
+        height: 1px;
+        background-color: #ddd;
+      }
+
+      .step-tit {
+        line-height: 36px;
+        margin: 15px 0;
+      }
+
+      .step-cont {
+        margin: 0 10px 12px 20px;
+
+        ul {
+          font-size: 0;
+
+          li {
+            margin: 2px;
+            display: inline-block;
+            padding: 5px 20px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+
+    .submit {
+      text-align: center;
+
+      .btn {
+        display: inline-block;
+        padding: 15px 45px;
+        margin: 15px 0 10px;
+        font: 18px '微软雅黑';
+        font-weight: 700;
+        border-radius: 0;
+        background-color: #e1251b;
+        border: 1px solid #e1251b;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+      }
+    }
   }
+}
 </style>
