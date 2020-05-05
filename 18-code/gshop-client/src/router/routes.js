@@ -26,7 +26,14 @@ import Center from '@/pages/Center'
 // 引入个人中心的我的订单组件
 import MyOrder from '@/pages/Center/MyOrder'
 // 引入个人中心的团购组件
-import GroupBuy from '@/pages/Center/GroupBuy'
+// import GroupBuy from '@/pages/Center/GroupBuy'
+
+// 动态的方式引入----路由懒加载----项目优化的方式
+const GroupBuy =()=>import('@/pages/Center/GroupBuy')
+
+
+
+
 // 引入store
 import store from '../store'
 export default [
