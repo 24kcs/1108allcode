@@ -4,20 +4,14 @@
 
 export const cpMixin = {
   methods: {
-    /*
-    取钱的方法, 由父组件调用
-    */
-    pullMoney(count) {
-      this.money -= count
+    pullMoney(money) {
+      this.money -= money
     },
-
-    /*
-    借钱给老爸
-    */
-    gaveMoney(count) {
-      this.money -= count
-      // 通过$parent得到父组件对象
-      this.$parent.money += count
+    gaveMoney(money) {
+      // 孩子借钱给付钱
+      this.money -= money
+      // 找到父级组件
+      this.$parent.money += money
     }
   }
 }

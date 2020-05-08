@@ -16,13 +16,15 @@ export default {
     }
   }
   // methods: {
-  //   // pullMoney(money) {
-  //   //   this.money -= money
-  //   // },
-  //   // gaveMoney(money) {
-  //   //   this.money -= money
-  //   //   this.$parent.money += money
-  //   // }
+  //   pullMoney(money) {
+  //     this.money -= money
+  //   },
+  //   gaveMoney(money) {
+  //     // 孩子借钱给付钱
+  //     this.money -= money
+  //     // 找到父级组件
+  //     this.$parent.money += money
+  //   }
   // }
 }
 </script>

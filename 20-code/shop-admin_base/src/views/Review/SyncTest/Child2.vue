@@ -8,6 +8,7 @@
 
 <script type="text/ecmascript-6">
 export default {
+  name: 'Child2',
   props: ['value']
 }
 </script>

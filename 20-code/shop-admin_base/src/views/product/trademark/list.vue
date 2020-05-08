@@ -5,8 +5,8 @@
       <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
       <el-table-column prop="tmName" label="品牌名称"></el-table-column>
       <el-table-column prop="logoUrl" label="品牌LOGO">
-        <template slot-scope="scope">
-          <img :src="scope.row.logoUrl" alt="logo" width="100px" height="60px" />
+        <template slot-scope="{row}">
+          <img :src="row.logoUrl" alt="logo" width="100px" height="60px" />
         </template>
       </el-table-column>
       <el-table-column prop="address" label="操作">
@@ -50,10 +50,14 @@
     ></el-pagination>
 
     <!--点击添加按钮,显示的对话框组件-->
-    <el-dialog
+    <!-- <el-dialog
       :title="form.id?'更新':'添加'"
       :visible="isShowDialog"
       :before-close="()=>isShowDialog=false"
+    > -->
+      <el-dialog
+      :title="form.id?'更新':'添加'"
+      :visible.sync="isShowDialog"
     >
       <!--品牌名字和品牌Logo-->
       <el-form :model="form" style="width:80%" :rules="rules" ref="trademarkForm">

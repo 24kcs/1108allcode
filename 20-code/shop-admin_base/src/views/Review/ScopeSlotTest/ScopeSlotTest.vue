@@ -7,13 +7,12 @@
         <span v-else>{{scope.row.text}}</span>
       </template>
     </List>
-    <hr />
-
     <h2>效果二: 显示TODO列表时, 带序号, TODO的颜色为蓝绿搭配</h2>
     <List :todos="todos">
       <template v-slot:default="scope">
+        <!--序号-->
         <span>{{scope.index+1}}--</span>
-        <span :style="{color:scope.index%2===0?'green':'blue'}">{{scope.row.text}}</span>
+        <span :style="{color:scope.index%2===0?'blue':'green'}">{{scope.row.text}}</span>
       </template>
     </List>
   </div>

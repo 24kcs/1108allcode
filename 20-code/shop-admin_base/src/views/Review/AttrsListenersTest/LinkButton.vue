@@ -1,15 +1,16 @@
 <template>
   <a href="javascript:;" :title="title">
-    <el-button v-bind="$attrs" v-on="$listeners">添加</el-button> 
+    <el-button v-bind="$attrs" v-on="$listeners">{{title}}</el-button>
   </a>
 </template>
 
 <script>
 export default {
   name: 'LinkButton',
-  props: ['title'], // 确定的属性通过props声明接收, 不确定的属性通过$attrs接收
+  props: ['title'],
   mounted() {
-    console.log('---', this.$attrs, this.$listeners)
+    console.log(this.$attrs)
+    console.log(this.$listeners)
   }
 }
 </script>

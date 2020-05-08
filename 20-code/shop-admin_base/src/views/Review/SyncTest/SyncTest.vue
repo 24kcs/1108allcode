@@ -1,19 +1,15 @@
 <template>
   <div>
     小明的爸爸现在有 {{ total }} 元
-    <hr />
-
     <h2>不使用sync修改符</h2>
+    <!--
+      子级组件更新父级组件中的某个数据,书写方式  :money="表达式" @update:money="total=$event"
+    -->
     <Child :money="total" @update:money="total=$event" />
-    <hr />
-
     <h2>使用sync修改符</h2>
     <Child :money.sync="total" />
-    <hr />
-
-    <h2>使用v-model修改符</h2>
+    <h2>使用v-model指令</h2>
     <Child2 v-model="total" />
-    <hr />
   </div>
 </template>
 
