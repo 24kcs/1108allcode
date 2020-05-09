@@ -14,7 +14,7 @@
     </el-form-item>
     <!--三级分类列表下拉框-->
     <el-form-item label="三级分类">
-      <el-select v-model="form.category3Id" placeholder="请选择">
+      <el-select v-model="form.category3Id" placeholder="请选择" @change="changeCategory3ListHandle">
         <el-option v-for="c in category3List" :key="c.id" :label="c.name" :value="c.id"></el-option>
       </el-select>
     </el-form-item>
@@ -59,6 +59,8 @@ export default {
       this.form.category3Id = null // 干掉无用的id
       this.category2List = [] // 重置二级分类列表数据的数组
       this.category3List = [] // 重置三级分类列表数据的数组
+      // 分发父级组件传递过来的自定义事件,同时传入当前这个一级分类的id值及标识
+      this.$emit('categoryChange', { categoryId: category1Id, level: 1 })
       // 调用接口,发送请求,根据一级分类的id,获取对应的二级分类列表数据
       const result = await this.$API.category.getCategorys2(category1Id)
       if (result.code === 200) {
@@ -70,13 +72,21 @@ export default {
       // 重置三级列表,最好的方式,干掉三级分类选中的id及数组
       this.form.category3Id = null // 干掉无用的id
       this.category3List = [] // 重置三级分类列表数据的数组
-      // 调用接口,发送请求,根据一级分类的id,获取对应的二级分类列表数据
+      // 分发父级组件传递过来的自定义事件,同时传入当前这个二级分类的id值及标识
+      this.$emit('categoryChange', { categoryId: category2Id, level: 2 })
       // 调用接口,发送请求,根据一级分类的id,获取对应的二级分类列表数据
       const result = await this.$API.category.getCategorys3(category2Id)
       if (result.code === 200) {
         this.category3List = result.data
       }
+    },
+    changeCategory3ListHandle(category3Id) {
+      // 分发父级组件传递过来的自定义事件,同时传入当前这个三级分类的id值及标识
+      this.$emit('categoryChange', { categoryId: category3Id, level: 3 })
     }
+
+    // 当前这个子级组件CategorySelector组件无论是一级分类还是二级分类或者是三级分类,每一次选中内容发生变化,都要分发父级组件传递过来的自定义事件,同时传入当前自己这个分类的id值,传入一个标识(分类的标识,一级分类:1,二级分类:2,三级分类:3),父级组件内部对应的这个自定义事件的回调函数会自动的执行(该函数需要一级分类id,二级分类id,三级分类id,分类的标识),执行所做的事情,无非就是根据对应的参数数据,发送请求,获取当前分类信息对应的平台数据列表数据
+    // 简述:子级组件分类信息变化,立刻通过自定义事件方式通知父级组件,发送请求获取数据
   }
 }
 </script>
