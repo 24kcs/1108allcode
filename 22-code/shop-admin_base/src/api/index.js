@@ -11,3 +11,7 @@ export { default as order } from './order'
 export { default as trademark } from './product/trademark'
 // 导出  导入默认暴露的attr模块
 export { default as attr } from './product/attr'
+// 导出  导入默认暴露的spu
+export { default as spu } from './product/spu'
+// 导出  导入默认暴露的sku
+export { default as sku } from './product/sku'

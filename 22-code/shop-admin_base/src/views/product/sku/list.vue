@@ -1,12 +1,10 @@
 <template>
-  <div>
-    SKU管理
-  </div>
+  <div>SKU管理</div>
 </template>
 
 <script>
 export default {
-  name: 'SkuList',
+  name: 'SkuList'
 }
 </script>
 

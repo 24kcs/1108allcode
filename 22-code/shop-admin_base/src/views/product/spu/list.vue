@@ -1,11 +1,9 @@
 <template>
-  <div>
-    SPU管理
-  </div>
+  <div>SPU管理</div>
 </template>
 
 <script>
 export default {
-  name: 'SpuList',
+  name: 'SpuList'
 }
 </script>

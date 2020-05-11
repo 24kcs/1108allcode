@@ -2,14 +2,19 @@
   <div>
     <!--三个级别的分类-->
     <el-card>
-      <CategorySelector @categoryChange="categoryChange" />
+      <CategorySelector @categoryChange="categoryChange" ref="cs" />
     </el-card>
     <!--表格列表数据展示-->
     <el-card style="margin-top:20px">
       <!--显示数据的界面-->
       <div v-show="isShowList">
         <!--按钮-->
-        <el-button type="primary" icon="el-icon-plus">添加属性</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="toAddAttr"
+          :disabled="!category3Id"
+        >添加属性</el-button>
         <!--表格-->
         <el-table :data="attrList" style="margin-top:20px" border>
           <!--第一列-->
@@ -33,7 +38,16 @@
                 size="mini"
                 @click="toUpdateAttr(row)"
               ></HintButton>
-              <HintButton title="删除" type="danger" icon="el-icon-delete" size="mini"></HintButton>
+
+              <el-popconfirm :title="`确定要删除${row.attName}属性吗`" @onConfirm="deleteAttr(row.id)">
+                <HintButton
+                  slot="reference"
+                  title="删除"
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="mini"
+                ></HintButton>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -49,7 +63,12 @@
         </el-form>
         <!--这里是添加属性值按钮和修改属性值-->
         <div style="margin-bottom:20px">
-          <el-button type="primary" icon="el-icon-plus" @click="addValue">添加属性值</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="addValue"
+            :disabled="!formAttr.attrName.trim()"
+          >添加属性值</el-button>
           <el-button @click="isShowList=true">取消</el-button>
         </div>
         <!--展现属性值的列表数据,table表格-->
@@ -97,7 +116,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="primary" @click="updateAttr">保存</el-button>
+        <el-button type="primary" @click="addUpdateAttr" :disabled="!isSaveValid">保存</el-button>
         <el-button @click="isShowList=true">取消</el-button>
       </div>
     </el-card>
@@ -116,7 +135,27 @@ export default {
       category2Id: '', // 二级分类的id
       category3Id: '', // 三级分类的id
       isShowList: true, // 默认为true,显示表格列表数据
-      formAttr: {} // 是当前这一行的属性对象(id,attName)
+      formAttr: {
+        attrName: '', // 默认为空值
+        attrValueList: [] // 默认为空数组
+      } // 是当前这一行的属性对象(id,attName)
+    }
+  },
+  // 计算属性操作
+  computed: {
+    isSaveValid() {
+      return (
+        // this.formAttr.attrName.trim() && this.formAttr.attrValueList.length > 0
+        this.formAttr.attrName.trim() &&
+        this.formAttr.attrValueList.some(item => !!item.valueName.trim())
+      )
+    }
+  },
+  // 这是个监视操作
+  watch: {
+    isShowList(val) {
+      // 父级组件改变子级组件CategorySelector 中的isDisabled属性值
+      this.$refs.cs.isDisabled = !val
     }
   },
   methods: {
@@ -173,7 +212,7 @@ export default {
     },
     // 文本框失去焦点后进入查看模式(失去焦点后,不能在进行编辑操作)
     toViewValue(value) {
-      console.log('哈哈')
+      // console.log('哈哈')
       // 判断文本框中是否有这个数据
       if (value.valueName) {
         // 这里是value对象中的edit属性,不是this对象的属性
@@ -199,16 +238,25 @@ export default {
       }
     },
     // 点击保存按钮,实现更新属性名称及属性值的操作
-    async updateAttr() {
+    async addUpdateAttr() {
       // 将formAttr对象中的所有的属性值对象的attrValueList中后添加的edit属性干掉
-      this.formAttr.attrValueList.forEach(value => delete value.edit)
+      // this.formAttr.attrValueList.forEach(value => delete value.edit)
+      this.formAttr.attrValueList = this.formAttr.attrValueList.filter(
+        value => {
+          // 干掉这个手动添加的响应式属性
+          delete value.edit
+          // 进行过滤,valueName属性的值是有数据,才留下
+          return !!value.valueName.trim()
+        }
+      )
       // 先获取当前属性的对象(属性名称,及属性值列表数组)
       // console.log(this.formAttr)
       const result = await this.$API.attr.saveUpdate(this.formAttr)
       if (result.code === 200) {
         this.$message({
           type: 'success',
-          message: '更新成功'
+          message: `${this.formAttr.id ? '更新' : '添加'}属性成功`
+          // message: `操作属性成功`
         })
         // 切换属性列表界面的操作
         this.isShowList = true
@@ -217,7 +265,8 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: '更新失败'
+          message: `${this.formAttr.id ? '更新' : '添加'}属性失败`
+          // message: `操作属性失败`
         })
       }
     },
@@ -231,6 +280,30 @@ export default {
       if (result.code === 200) {
         // 更新数据,获取平台所有的属性列表数据
         this.attrList = result.data
+      }
+    },
+    // 点击添加属性按钮，实现添加属性的操作
+    toAddAttr() {
+      // 收集数据
+      this.formAttr = {
+        attrName: '', // 属性名字
+        attrValueList: [], // 属性值列表数组
+        categoryId: this.category3Id, // 三级分类的id
+        categoryLevel: 3
+      }
+      // 显示添加数据的界面
+      this.isShowList = false
+    },
+    // 点击首页的删除按钮,实现删除属性的操作
+    async deleteAttr(id) {
+      // 调用接口发送请求
+      const result = await this.$API.attr.deleteAttr(id)
+      if (result.code === 200) {
+        this.$message.success('删除属性成功')
+        // 如果删除属性成功,则重新获取属性列表数据
+        this.getAttrList()
+      } else {
+        this.$message.error('删除属性失败')
       }
     }
   }
