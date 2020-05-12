@@ -31,11 +31,10 @@ router.beforeEach(async(to, from, next) => {
     } else {
       // 当前是否已经登陆
       const hasLogin = !!store.getters.name
-      
       // 如果已经登陆直接放行
       if (hasLogin) {
         next()
-      } else {// 如果还没有登陆
+      } else { // 如果还没有登陆
         try {
           // 请求获取用户信息
           await store.dispatch('user/getInfo')
@@ -43,10 +42,10 @@ router.beforeEach(async(to, from, next) => {
           const asyncRoutes = await store.dispatch('permission/generateRoutes')
           // 动态添加可访问的权限路由, 注意将lastRoute放在最后
           router.addRoutes(asyncRoutes.concat(lastRoute))
-          console.log('asyncRoutes', asyncRoutes.concat(lastRoute))
+          // console.log('asyncRoutes', asyncRoutes.concat(lastRoute))
           // 跳转到目标路由去, 只是强制用替换模式
           next({ ...to, replace: true })
-        } catch (error) { // 如果请求处理过程中出错 
+        } catch (error) { // 如果请求处理过程中出错
           // 重置token
           await store.dispatch('user/resetToken')
           // 提示错误信息
@@ -63,7 +62,7 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       // 放行
       next()
-    } else { 
+    } else {
       // 如果没在白名单中, 跳转到登陆路由携带原目标路径
       next(`/login?redirect=${to.path}`)
       // 完成进度条
