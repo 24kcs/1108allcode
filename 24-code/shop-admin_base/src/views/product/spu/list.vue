@@ -5,7 +5,7 @@
       <CategorySelector ref="cs" @categoryChange="categoryChange" />
     </el-card>
     <el-card>
-      <div v-show="!isShowSpuForm">
+      <div v-show="!isShowSpuForm&&!isShowSkuForm">
         <!--添加SPU属性的按钮-->
         <el-button
           type="primary"
@@ -22,7 +22,13 @@
           <el-table-column label="SPU描述" prop="description"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="{row,$index}">
-              <HintButton title="添加SKU" type="primary" icon="el-icon-plus" size="mini"></HintButton>
+              <HintButton
+                title="添加SKU"
+                type="primary"
+                icon="el-icon-plus"
+                size="mini"
+                @click="showAddSku(row)"
+              ></HintButton>
               <HintButton
                 title="修改SPU"
                 type="primary"
@@ -62,6 +68,7 @@
         @saveSuccess="saveSuccess"
         @cancel="cancel"
       />
+      <SkuForm v-show="isShowSkuForm" ref="skuForm" />
     </el-card>
   </div>
 </template>
@@ -69,10 +76,13 @@
 <script>
 // 引入SpuFrom组件
 import SpuForm from '../components/SpuForm'
+// 引入SkuForm组件
+import SkuForm from '../components/SkuForm'
 export default {
   name: 'SpuList',
   components: {
-    SpuForm
+    SpuForm,
+    SkuForm
   },
   data() {
     return {
@@ -84,7 +94,8 @@ export default {
       limit: 3, // 默认每页3条
       total: 0, // 默认总的数量
       isShowSpuForm: false, // 默认不显示修改SpuForm组件
-      spuId: '' // 用来标识是添加还是修改
+      spuId: '', // 用来标识是添加还是修改
+      isShowSkuForm: false // 默认SkuForm组件显示的
     }
   },
   watch: {
@@ -168,6 +179,26 @@ export default {
       this.isShowSpuForm = true
       // 初始化SpuForm组件内部的数据(品牌信息,销售信息),并传入三级分类的id值
       this.$refs.spuForm.initAddData(this.category3Id)
+    },
+    // 点击按钮添加当前这个spu的对应的sku操作
+    showAddSku(spu) {
+      // 设置SkuForm组件显示
+      this.isShowSkuForm = true
+      // 1. SkuForm组件一开始显示的时候,获取到所有的平台属性数据数组----发个请求
+      // 2. SkuForm组件一开始显示的时候,获取图片数数组---发个请求
+      // 3. SkuForum组件一开始显示的时候,获取当前这个spu的销售属性----发个请求
+      // 第一个请求获取平台属性数据---需要一级分类id,二级分类id,三级分类id
+      // 第二个请求获取当前spu的图片数组数据---需要spuId
+      // 第三个请求获取当前spu的销售属性数组数据---需要spuId
+
+      // {category1Id,category2Id,category3Id,spuId}
+      const spuInfo = {
+        ...spu,
+        category1Id: this.category1Id,
+        category2Id: this.category2Id
+      }
+      // 用来发送请求,获取想要的数据的
+      this.$refs.skuForm.initAddData(spuInfo)
     }
   }
 }
