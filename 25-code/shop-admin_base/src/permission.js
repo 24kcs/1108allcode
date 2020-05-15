@@ -8,6 +8,7 @@ import getPageTitle from '@/utils/get-page-title' // 获取应用头部标题的
 
 NProgress.configure({ showSpinner: false }) // 配置NProgress: 不显示右侧旋转进度条
 
+// 白名单路由菜单
 const whiteList = ['/login'] // no redirect whitelist
 
 // 注册全局前置守卫: 在路由准备跳转前执行

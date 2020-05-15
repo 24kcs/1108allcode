@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout: 整体界面布局的根路由组件 */
 import Layout from '@/layout'
+// console.log(Layout)
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -54,6 +55,7 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+  // 知识点配置路由,进行讲解
   {
     path: '/review',
     component: () => import('@/views/Review/Review'),
