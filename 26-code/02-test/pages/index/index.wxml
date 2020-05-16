@@ -1,0 +1,5 @@
+<!--pages/index/index.wxml-->
+<view>
+  <text>欢迎大家学习小程序</text>
+</view>
+

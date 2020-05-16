@@ -1,0 +1,9 @@
+<!--pages/index/index.wxml-->
+<!--外层的容器-->
+<view>
+  <!--自己做的按钮-->
+  <view class="btn-container" catchtap="showMsg" id="btn">
+    <text>神奇的按钮</text>
+  </view>
+  <text>{{msg}}</text>
+</view>

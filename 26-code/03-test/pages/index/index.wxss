@@ -1,0 +1,16 @@
+/* pages/index/index.wxss */
+
+.btn-container {
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border:1px solid red;
+  border-radius: 20rpx;
+}
+
+.btn-container text {
+  font-size: 28rpx;
+  font-weight: 700;
+  font-family: '全新硬笔行书简'
+}

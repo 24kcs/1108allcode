@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/log/log"
+   
+    
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#02a774",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "欢迎学习小程序",
+    "backgroundColor": "#9400D3",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": true
+  }
+}
