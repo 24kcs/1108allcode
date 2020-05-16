@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/list/list",
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#02a774",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "欢迎来到小程序",
+    "backgroundColor": "#eeeeee",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  },
+  "sitemapLocation": "sitemap.json"
+}

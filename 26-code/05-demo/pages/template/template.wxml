@@ -1,0 +1,22 @@
+<template name="msgItem">
+  <view class="templateContainer">
+    <!--头像和日期-->
+    <view class="avatar">
+      <image src="/images/avatar/0.png"></image>
+      <text>may 2018</text>
+    </view>
+    <!--标题内容-->
+    <text class="company">教育理念</text>
+    <!--大图片-->
+    <image class="company-img" src="/images/detail/carousel/02.jpg"></image>
+    <!--文字描述-->
+    <text class="company-text">咱们班级有很多男生总想唱歌,却不敢唱,还很害羞,从来都不敢.咱们班级有很多男生总想唱歌,却不敢唱,还很害羞,从来都不敢. 咱们班级有很多男生总想唱歌,却不敢唱,还很害羞,从来都不敢.</text>
+    <!--收藏和浏览-->
+    <view class="company-img-text">
+      <image src="/images/icon/chat.png"></image>
+      <text>88</text>
+      <image src="/images/icon/view.png"></image>
+      <text>66</text>
+    </view>
+  </view>
+</template>

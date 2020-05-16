@@ -1,0 +1,16 @@
+<!--pages/index/index.wxml-->
+<view>
+  <!-- <view class="container" catchtap="showMsg2">
+    <text catchtap="showMsg1">神奇的按钮</text>
+  </view> -->
+  <!-- <view class="container" bindtap="showMsg2">
+    <text bindtap="showMsg1">神奇的按钮</text>
+  </view> -->
+  <!--非冒泡事件放在父级组件上更合适一下-->
+  <!-- <view class="container" catchtap="showMsg2">
+    <text>神奇的按钮</text>
+  </view> -->
+  <view class="container" bindtap="showMsg2">
+    <text>神奇的按钮</text>
+  </view>
+</view>
