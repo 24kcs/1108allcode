@@ -1,0 +1,22 @@
+<template name="msgItem">
+  <view class="templateContainer">
+    <!--头像和日期-->
+    <view class="avatar">
+      <image src="{{avatar}}"></image>
+      <text>{{date}}</text>
+    </view>
+    <!--标题内容-->
+    <text class="company">{{title}}</text>
+    <!--大图片-->
+    <image class="company-img" src="{{detail_img}}"></image>
+    <!--文字描述-->
+    <text class="company-text">{{detail_content}}</text>
+    <!--收藏和浏览-->
+    <view class="company-img-text">
+      <image src="{{detail_love_image1}}"></image>
+      <text>{{love_count}}</text>
+      <image src="{{detail_love_image2}}"></image>
+      <text>{{attention_count}}</text>
+    </view>
+  </view>
+</template>

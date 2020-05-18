@@ -1,0 +1,68 @@
+/* pages/detail/detail.wxss */
+/* 大容器变成伸缩盒子 */
+.detailContainer{
+  display: flex;
+  flex-direction: column;
+}
+/* 大图,设置宽和高 */
+.detail_header{
+  width:100%;
+  height:460rpx;
+}
+/* 作者头像及作者名字和日期 */
+.detail_author_date{
+  padding: 10rpx;
+}
+/* 作者的头像 */
+.detail_author_date image{
+  width:64rpx;
+  height:64rpx;
+  border-radius: 32rpx;
+  vertical-align: middle;
+}
+/* 作者的文字及日期 */
+.detail_author_date text{
+  font-size:28rpx;
+  vertical-align: middle;
+  margin-left:10rpx;
+}
+/* 标题 */
+.detail_company{
+  font-size:32rpx;
+  font-weight: 700;
+  margin:10rpx 0 10rpx 30rpx
+}
+/* 横线和收藏和分享 */
+.detail_collection_share {
+  position: relative;
+}
+/* 收藏和分享的图片的小容器 */
+.detail_collection_share .col_share_img{
+  float: right;
+  margin-right: 60rpx;
+}
+/* 收藏和分享的两个图片 */
+.col_share_img image{
+  width:90rpx;
+  height:90rpx;
+  margin-right: 10rpx;
+}
+/* 线 */
+.detail_collection_share .line{
+  width:90%;
+  height:1px;
+  background-color: #666;
+  position: absolute;
+  top:45rpx;
+  z-index:-1;
+  left:5%;
+}
+button{
+  width:260rpx;
+  height:80rpx;
+}
+.detail_content{
+  font-size: 14px;
+  line-height: 28px;
+  text-indent: 14px;
+}

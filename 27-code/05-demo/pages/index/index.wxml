@@ -1,0 +1,8 @@
+<!--容器-->
+<view class="container">
+  <image class="avatar" src="/images/index/lyml.jpg"></image>
+  <text class="userName">hello 莱亚</text>
+  <view class="button-container" bindtap="goList">
+    <text>开启小程序之旅</text>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+<!--pages/detail/detail.wxml-->
+
+<view class="detailContainer">
+  <!--大图-->
+  <image class="detail_header" src="{{detail.detail_img}}"></image>
+  <!--头像和作者和时间-->
+  <view class="detail_author_date">
+    <!--头像-->
+    <image src="{{detail.avatar}}"></image>
+    <!--作者-->
+    <text>作者:{{detail.author}}</text>
+    <!--日期-->
+    <text>发布于 {{detail.date}}</text>
+  </view>
+  <!--标题-->
+  <text class="detail_company">{{detail.title}}</text>
+  <!--大容器-->
+  <view class="detail_collection_share">
+    <!--小容器 存放两个图片-->
+    <view class="col_share_img">
+      <!--收藏的图片按钮-->
+      <image src="{{isCollectioned?'/images/icon/collection.png':'/images/icon/collection-anti.png'}}" catchtap="handleCollection"></image>
+      <!--分享的图片按钮-->
+      <image src="/images/icon/share.png"></image>
+    </view>
+    <!--底部的横线-->
+    <view class="line"></view>
+  </view>
+  <!--按钮-->
+  <button>转发此文章</button>
+  <text class="detail_content">{{detail.detail_content}}</text>
+</view>
