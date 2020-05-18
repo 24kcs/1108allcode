@@ -1,4 +1,10 @@
+
 App({
+  // data对象,缓存数据
+  data:{
+    musicPlay:false, // 默认音乐没有播放
+    pageIndex:null // 缓存对应播放项的索引
+  },
 
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）

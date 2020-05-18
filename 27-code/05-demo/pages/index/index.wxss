@@ -1,4 +1,5 @@
 /* pages/index/index.wxss */
+
 page {
   width: 100%;
   height: 100%;
@@ -13,9 +14,18 @@ page {
   background-color: #02a774;
 }
 
+.btn {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  margin-top: 100rpx;
+  text-align: center;
+  line-height: 200rpx;
+}
+
 .avatar {
   width: 200rpx;
-  height:200rpx;
+  height: 200rpx;
   border-radius: 50%;
   margin-top: 100rpx;
 }
@@ -28,12 +38,13 @@ page {
 
 .button-container {
   width: 200rpx;
-  height:80rpx;
+  height: 80rpx;
   border: 1rpx solid #666;
   line-height: 80rpx;
   text-align: center;
   border-radius: 20rpx;
 }
-.button-container text{
+
+.button-container text {
   font-size: 26rpx;
 }

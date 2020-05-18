@@ -3,6 +3,16 @@
 .detailContainer{
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+/* 设置播放音乐按钮的图片样式 */
+.music{
+  width:60rpx;
+  height:60rpx;
+  position: absolute;
+  left:50%;
+  top:200rpx;
+  margin-left:-30rpx;
 }
 /* 大图,设置宽和高 */
 .detail_header{

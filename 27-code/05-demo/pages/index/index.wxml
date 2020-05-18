@@ -1,7 +1,8 @@
 <!--容器-->
 <view class="container">
-  <image class="avatar" src="/images/index/lyml.jpg"></image>
-  <text class="userName">hello 莱亚</text>
+  <button class="btn" wx:if="{{!userInfo.nickName}}" open-type="getUserInfo" bindgetuserinfo="getUser">获取用户</button>
+  <image class="avatar" src="{{userInfo.nickName?userInfo.avatarUrl:'images/index/lyml.jpg'}}" wx:if="{{userInfo.nickName}}"></image>
+  <text class="userName">hello {{userInfo.nickName}}</text>
   <view class="button-container" bindtap="goList">
     <text>开启小程序之旅</text>
   </view>

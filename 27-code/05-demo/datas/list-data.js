@@ -61,9 +61,9 @@ let list_data = [
     attention_count: 66,
     detail: '巨无霸教授。',
     music: {
-      dataUrl: 'http://m7.music.126.net/20191203222057/de45fdc36d12feababd97af22ae9e432/ymusic/8007/9813/dcaa/67a760614ffeeaf2cc61896995c6133a.mp3', // 音乐链接
-      title: '谁伴我闯荡',   // 音乐标题
-      coverImgUrl: 'https://p3.music.126.net/8dEEj_V5UxD2VW3tXxIp4w==/109951163676757259.jpg?param=300y300',
+      dataUrl: 'http://music.163.com/song/media/outer/url?id=1411582071.mp3', // 音乐链接
+      title: '安和桥唢呐版',   // 音乐标题
+      coverImgUrl: 'http://p2.music.126.net/qSOpf3q1AyCwmo3b4FJOYw==/109951164587163334.jpg?param=130y130',
     },
     postId: 2
   },
