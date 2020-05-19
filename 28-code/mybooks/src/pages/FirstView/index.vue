@@ -33,7 +33,7 @@ export default {
     },
     // 跳转到书籍页面
     goBooks(){
-      wx.navigateTo({
+      wx.switchTab({
         url: '/pages/Books/main'
       })
     }

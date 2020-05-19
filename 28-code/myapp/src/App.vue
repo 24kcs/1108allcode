@@ -6,6 +6,7 @@
      <router-link to="/test1">第一个</router-link>
      <router-link to="/test2">第二个</router-link>
    </div>
+   <!--缓存起来-->
     <keep-alive>
        <router-view></router-view>
     </keep-alive>

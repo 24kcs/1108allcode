@@ -1,8 +1,8 @@
 <template>
   <div class="bookListContainer">
     <ul>
-      <li v-for="(book,index) in books" :key="index">
-        <img :src="book.image" alt="">
+      <li v-for="(book,index) in books" :key="index" @click="goDetail(book,index)">
+        <img :src="book.image" alt />
         <div class="books_content">
           <p>《{{book.title}}》</p>
           <p>作者:{{book.author}}</p>
@@ -15,18 +15,26 @@
 </template>
 <script>
 export default {
-  data () {
+  props: ['books'],
+  data() {
     return {
-      books:[]  
+      books: []
     }
   },
   // 页面加载的事件
-  mounted () {
+  mounted() {
     // console.log(this)
     // this.$mp.query.books  中就有另一个组件路由跳转的时候传递过来的参数数据
     // 判断当前$mp是否存在
-    if(this.$mp){
+    if (this.$mp) {
       this.books = JSON.parse(this.$mp.query.books)
+    }
+  },
+  methods: {
+    goDetail(book, index) {
+      wx.navigateTo({
+        url: `/pages/Detail/main?book=${JSON.stringify(book)}&index=${index}`
+      })
     }
   }
 }
@@ -54,5 +62,4 @@ export default {
         color red
         font-size 36rpx
         font-weight 700
-
 </style>
