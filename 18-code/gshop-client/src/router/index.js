@@ -52,7 +52,7 @@ VueRouter.prototype.replace = function (location, onComplete, onAbort = () => { 
 // 声明使用路由
 Vue.use(VueRouter)
 const router = new VueRouter({
-  mode: 'history', // 设置路由地址的模式---hash是带#,history---不带#
+  mode: 'hash', // 设置路由地址的模式---hash是带#,history---不带#
   routes,  // 路由组件的注册的数组
   scrollBehavior (to, from, savedPosition) {
     // return 期望滚动到哪个的位置

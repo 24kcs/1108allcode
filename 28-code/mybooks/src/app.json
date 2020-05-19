@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/Books/main",
+    "pages/FirstView/main",
+    "pages/BookList/main"
+   
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#02a774",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "",
+    "navigationStyle": "default",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "backgroundColorTop": "#ffffff",
+    "backgroundColorBottom": "#ffffff",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 50
+  }
+}
